@@ -46,13 +46,15 @@ uglyURLs = false
 
 # URL 结构
 [permalinks]
-    categories = "/categories/:slug/"
+    #categories = "/categories/:slug/"
     tags = "/tags/:slug/"
+    series = "/series/:slug/"
 
 # 类别
 [taxonomies]
-    category = "categories"
+    #category = "categories"
     tag = "tags"
+    series = "series"
 
 # 修改时间
 [frontmatter]
@@ -113,8 +115,11 @@ uglyURLs = false
     threshold = 80
     includeNewer = true
     toLower = true
+    #[[related.indices]]
+    #    name = "categories"
+    #    weight = 100
     [[related.indices]]
-        name = "categories"
+        name = "series"
         weight = 100
     [[related.indices]]
         name = "tags"
@@ -189,23 +194,32 @@ uglyURLs = false
 [menu]
     ## 菜单栏
     [[menu.main]]
-        pageref = "/posts/"
-        name = "文章"
-        weight = 2
+        url = "/tags/"
+        name = "标签"
+        weight = 1
         pre = "internal"
-        post = "archive"
+        post = "tags"
+        identifier = "tags"
     [[menu.main]]
         pageref = "/categories/"
         name = "分类"
-        weight = 3
+        weight = 2
         pre = "internal"
         post = "th"
     [[menu.main]]
-        pageref = "/tags/"
-        name = "标签"
+        url = "/life/"
+        name = "生活"
+        weight = 3
+        pre = "internal"
+        post = "grav"
+        identifier = "life"
+    [[menu.main]]
+        url = "/tech/"
+        name = "技术"
         weight = 4
         pre = "internal"
-        post = "tags"
+        post = "wpexplorer"
+        identifier = "tech"
     [[menu.main]]
         pageref = "/about/"
         name = "关于"
@@ -218,8 +232,6 @@ uglyURLs = false
     [[menu.main]]
         weight = 7
         identifier = "lang-switcher"
-
-
 
 ##########################################
 # 主题配置
@@ -312,12 +324,12 @@ uglyURLs = false
     homePoster = ""
     homeVideoWebm = ""
     homeVideoMp4 = ""
-    homeLogo = ""
-    homeLogoLink = ""
-    homeTitle = ""
-    homeMotto = ""
-    homeDescription = ""
-    homeKeywords = ""
+    homeLogo = "/icons/android-chrome-512x512.png"
+    homeLogoLink = "/home/"
+    homeTitle = "Liawne"
+    homeMotto = "just go go"
+    homeDescription = "莫听穿林打叶声，何妨吟啸且徐行。竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。料峭春风吹酒醒，微冷，山头斜照却相迎。回首向来萧瑟处，归去，也无风雨也无晴。"
+    homeKeywords = "个人博客，关键词：生活、技术、计算机"
     homeLinksDelimiter = ""
 
 
@@ -357,7 +369,7 @@ uglyURLs = false
     # 的树状分类，故如需保留树状分类，建议适应
     # Hugo 的设计理念——分区。
 
-    categoryBy = "categories"
+    categoryBy = "sections"
     # 注意：如果你设置为 `sections`，请务必将
     #      此配置文件中的类别（taxonomies）中
     #      的 `categories` 删除，不然分类页
