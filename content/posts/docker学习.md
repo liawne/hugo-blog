@@ -4,9 +4,11 @@ date: 2022-03-10 22:01:26
 tags: ['云原生', 'docker', 'cloud']
 categories: ['技术', '学习笔记']
 description: "介绍容器的实现,讲解docker常用命令和Dockerfile的使用"
+toc: true
 ---
 
-### \#. 容器是什么 ###
+## \#. 容器是什么 ###
+
 1, LXC(linux container): linux容器
 
 2, 虚拟化类型:
@@ -100,7 +102,7 @@ description: "介绍容器的实现,讲解docker常用命令和Dockerfile的使�
   - runc,容器运行时的环境标准
   - 容器镜像格式标准OCF(open container format),事实上的工业标准
 
-### \#. docker基础用法 ###
+## \#. docker基础用法 ###
 1, 相关名词
   - OCI(open container initiative),开放容器协会,主要目的是围绕容器格式和运行时制定一个开放的工业化标准,由两部分组成:
     - runtime-spec(The Runtime Specification): 运行时标准
@@ -169,7 +171,7 @@ description: "介绍容器的实现,讲解docker常用命令和Dockerfile的使�
     - kill: 相当于sitkill
   - 启动一个容器时,不能让其跑在后台,不然启动就会停止(一个容器就是为了一个进程,如果跑后台,终端没有任何程序,那docker就认为已经结束了)
 
-### \#. docker镜像管理基础 ###
+## \#. docker镜像管理基础 ###
 1, docker镜像含有启动容器所需要的文件系统及其内容,容器镜像用于创建并启动docker容器
   - 采用分层构建的机制,最底层为bootfs,其次为rootfs
   	- bootfs: 用于系统引导的文件系统,包括bootloader和kernel,容器启动完成后会被卸载以节约内存资源
@@ -231,7 +233,7 @@ description: "介绍容器的实现,讲解docker常用命令和Dockerfile的使�
   - docker save -o <filename>
   - docker load -i <filename>
 
-### \#. 容器虚拟化网络 ###
+## \#. 容器虚拟化网络 ###
 1,网络名称空间主要是实现网络设备(网卡,协议栈)的隔离
   - 当网络设备不够用时,可以通过命令生成虚拟网络设备,linux内核支持实现生成两种网络设备:
     - 二层网络设备
@@ -261,7 +263,7 @@ description: "介绍容器的实现,讲解docker常用命令和Dockerfile的使�
   - docker container inspect <container name>
   - docker volume inspect <volume name>
 
-### \#. 容器网络 ###
+## \#. 容器网络 ###
 1,容器间可以共享IPC,UTC,NET命名空间
 
 2,可以手动操作网络名称空间,因为由ip命令
@@ -335,7 +337,7 @@ description: "介绍容器的实现,讲解docker常用命令和Dockerfile的使�
     docker run -it --name t2 --net bridge busybox:latest
     ```
 
-### \#. 容器存储 ###
+## \#. 容器存储 ###
 1,为什么要使用data volume
   - docker镜像由多个只读层叠加而成,启动容器时,docker会加载只读镜像层并在镜像栈顶添加一个读写层
   - 如果运行中的容器修改了现有的一个已经存在的文件,那该文件将会从读写层下面的只读层复制到读写层,该文件的只读版本仍然存在,之时已经被读写层中该文件的副本所隐藏,此即"写时复制(COW)"机制
@@ -416,7 +418,7 @@ description: "介绍容器的实现,讲解docker常用命令和Dockerfile的使�
     ```
   - 对于这种需求,可以使用docker-compose来实现,主要功能是单击编排(还可以做镜像,镜像现做,容器现启动)
 
-### \#. Dockerfile详解(一) ###
+## \#. Dockerfile详解(一) ###
 1,生产环境下使用nginx场景,修改配置生效的几种方式
   - docker exec CONTAINER vi, reload进入容器修改配置文件,再reload服务
   - 挂载存储卷,配置文件在存储卷中,但修改之后还是需要reload操作
@@ -560,7 +562,7 @@ description: "介绍容器的实现,讲解docker常用命令和Dockerfile的使�
 
 5,Dockerfile中请惜字如金,因为每一条指令都会生成一个新的层
 
-### \#. Dockerfile详解(二) ###
+## \#. Dockerfile详解(二) ###
 1,在docker的上下文当中,有一个重要的特点,一个容器只是为了运行单个程序或者单个应用
 
 2,在命令行下通过&符放后台执行的程序都是当前shell的子进程,当退出当前shell时,该shell的子进程会被杀掉,相应的该shell下的后台进程也被关闭
@@ -704,7 +706,7 @@ description: "介绍容器的实现,讲解docker常用命令和Dockerfile的使�
 
 5,在写Dockerfile时,注意json传入时必须要写双引号,单引号会报错
 
-### \#. Docker私有registry ###
+## \#. Docker私有registry ###
 1,registry用于保存docker镜像,包括镜像的层次结构和元数据
 
 2,启动registry有几种方式
@@ -732,7 +734,7 @@ description: "介绍容器的实现,讲解docker常用命令和Dockerfile的使�
   - 实例间镜像拷贝
   - 扩展API和web UI界面
 
-### \#. Docker的资源限制 ###
+## \#. Docker的资源限制 ###
 1,默认情况下,容器是没有资源限制的,可以使用完宿主机上内核分配给该容器的所有资源
 
 2,docker提供了一个途径,可以用来控制容器可以使用多少CPU,memory,块设备IO(限制有限);可以通过设置运行时(runtime)配置
