@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3d4458df-a369-46ad-ade9-3eb37dfcc789" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.hugo_build.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/blog.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/archetypes/default.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content/about/_index.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content/archives/_index.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content/categories/_index.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content/posts/_index.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content/posts/ansible学习.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content/posts/bash学习.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content/posts/docker学习.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content/posts/hexo多设备管理.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content/posts/计划内容.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content/tags/_index.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/_gen/assets/scss/scss/main.scss_a059ebc49e8302e6cfbf0e02020b9d85.content" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/_gen/assets/scss/scss/main.scss_a059ebc49e8302e6cfbf0e02020b9d85.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/_gen/assets/scss/scss/main.scss_a899b346ffc3a4bc65b84e40528dea51.content" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/_gen/assets/scss/scss/main.scss_a899b346ffc3a4bc65b84e40528dea51.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/_gen/assets/scss/scss/main.scss_b618471f3106117dd0a47f25b09618d4.content" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/_gen/assets/scss/scss/main.scss_b618471f3106117dd0a47f25b09618d4.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/CNAME" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/icons/android-chrome-512x512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/icons/apple-touch-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/icons/mstile-150x150.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/icons/safari-pinned-tab.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/uploads/favicon_package_v0.16.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/meme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <option name="UPDATE_TYPE" value="MERGE" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="26JHDg8yvQIT8DqSjq4nuKj48UJ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="ToolWindowVersion Control.ShowToolbar" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static/uploads" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/content/posts" />
+      <recent name="$PROJECT_DIR$/static/icons" />
+      <recent name="$PROJECT_DIR$/static" />
+      <recent name="$PROJECT_DIR$/content/tech" />
+      <recent name="$PROJECT_DIR$/content/tags" />
+    </key>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3d4458df-a369-46ad-ade9-3eb37dfcc789" name="Default Changelist" comment="" />
+      <created>1647134650841</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1647134650841</updated>
+      <workItem from="1647134652723" duration="82000" />
+      <workItem from="1647134751969" duration="620000" />
+      <workItem from="1647137467674" duration="7371000" />
+      <workItem from="1647160694930" duration="1006000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="556" y="176" key="#Menus_and_Toolbars" timestamp="1647160980246">
+      <screen x="0" y="0" width="1920" height="1036" />
+    </state>
+    <state x="556" y="176" key="#Menus_and_Toolbars/0.0.1920.1036@0.0.1920.1036" timestamp="1647160980246" />
+    <state x="556" y="176" key="#Notifications" timestamp="1647160992079">
+      <screen x="0" y="0" width="1920" height="1036" />
+    </state>
+    <state x="556" y="176" key="#Notifications/0.0.1920.1036@0.0.1920.1036" timestamp="1647160992079" />
+    <state x="664" y="318" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1647160769227">
+      <screen x="0" y="0" width="1920" height="1036" />
+    </state>
+    <state x="664" y="318" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1036@0.0.1920.1036" timestamp="1647160769227" />
+    <state x="188" y="86" key="DiffContextDialog" timestamp="1647134702750">
+      <screen x="0" y="0" width="1920" height="1036" />
+    </state>
+    <state x="188" y="86" key="DiffContextDialog/0.0.1920.1036@0.0.1920.1036" timestamp="1647134702750" />
+    <state x="745" y="239" key="RollbackChangesDialog" timestamp="1647134705930">
+      <screen x="0" y="0" width="1920" height="1036" />
+    </state>
+    <state x="745" y="239" key="RollbackChangesDialog/0.0.1920.1036@0.0.1920.1036" timestamp="1647134705930" />
+    <state x="457" y="150" key="SettingsEditor" timestamp="1647161365550">
+      <screen x="0" y="0" width="1920" height="1036" />
+    </state>
+    <state x="457" y="150" key="SettingsEditor/0.0.1920.1036@0.0.1920.1036" timestamp="1647161365550" />
+    <state width="498" height="447" key="SwitcherDM" timestamp="1647161014168">
+      <screen x="0" y="0" width="1920" height="1036" />
+    </state>
+    <state width="498" height="447" key="SwitcherDM/0.0.1920.1036@0.0.1920.1036" timestamp="1647161014168" />
+    <state x="747" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1647161384183">
+      <screen x="0" y="0" width="1920" height="1036" />
+    </state>
+    <state x="747" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1036@0.0.1920.1036" timestamp="1647161384183" />
+  </component>
+</project>
