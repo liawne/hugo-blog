@@ -113,6 +113,7 @@ all:
 
 ### 认识ansible-playbook ###
 1,ansible-playbook的使用,可以理解为ansible -m <module_name> -a 'xxxx'的转换,将命令行使用模块操作的内容写成脚本内容,按照脚本内容完成相关操作
+
 2,上述脚本在ansible-playbook中称作为'playbook',即剧本
   - 每个playbook(剧本)又多个play(桥段)组成,每个剧本是由多个桥段组成的,每个桥段包含有人物,场景,故事
   - 每个play在执行时,都会执行一个默认任务('Gathering Facts),任务会收集当前当前play对应的目标主机的相关信息(IP,hostname,硬件版本,系统版本等),收集完成后才会完成我们定义的相关任务

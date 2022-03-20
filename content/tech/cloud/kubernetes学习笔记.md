@@ -1,7 +1,7 @@
 +++
 title = "Kubernetes学习笔记"
 description = "k8s学习笔记记录"
-draft = true
+draft = false
 date = "2022-03-13T22:04:30+08:00"
 lastmod = "2022-03-13T22:04:30+08:00"
 tags = ["cloud", "docker", "云原生", "kubernetes"]

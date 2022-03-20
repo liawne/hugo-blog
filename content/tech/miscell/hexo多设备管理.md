@@ -6,14 +6,14 @@ categories: ['技术', '操作记录']
 description: "在新设备上准备hexo发布文章的配置过程"
 ---
 `github+hexo+next搭建个人博客`已经完成,使用一段时间后,发现存在多处编辑提交的需求.
-在网上查询相关方案后,决定采取广大网友建议的方式: 将平时需要修改的内容存储在hexo分支,hexo基于更改内容生成的文件提交到master分支
-下列内容记录在raspberry上配置实现hexo编辑提交内容的过程
+在网上查询相关方案后,决定采取广大网友建议的方式: 将平时需要修改的内容存储在 hexo 分支,hexo 基于更改内容生成的文件提交到 master 分支
+下列内容记录在 raspberry 上配置实现 hexo 编辑提交内容的过程
 <!--more-->
 
 ### 1.安装基础包
 
-在新机器上安装基础包，当前机器为raspberry，以该机器为例说明
-raspberry安装系统是"Raspbian GNU/Linux 10 (buster)"，基于debian的发行，用如下命令安装
+在新机器上安装基础包，当前机器为 raspberry，以该机器为例说明
+raspberry 安装系统是"Raspbian GNU/Linux 10 (buster)"，基于 debian 的发行，用如下命令安装
 ```bash
 # 安装nodejs、npm、git
 sudo apt install nodejs npm git
@@ -21,7 +21,7 @@ sudo apt install nodejs npm git
 
 ### 2.配置git及github
 
-安装好基础包后，要配置github上**个人资料/settings/SSH and GPG keys/SSH keys**,用于提交代码使用
+安装好基础包后，要配置 github 上**个人资料/settings/SSH and GPG keys/SSH keys**,用于提交代码使用
 ```bash
 # 在raspberry上,使用pi用户生成公私钥对
 PI $ ssh-keygen -t rsa -P ''
@@ -56,7 +56,7 @@ PI $ cat ~/.ssh/id_rsa.pub
 ssh-rsa AAAAB3NzaCxxxx.....
 ```
 
-配置本地git
+配置本地 git
 ```bash
 # 配置user.name和user.email
 PI $ git config --global user.email "you@example.com"
@@ -66,7 +66,7 @@ PI $ git config --global user.name "Your Name"
 
 ### 3.npm安装hexo相关包
 
-配置好github **SSH keys**后,下载**yourname.github.io**库到本地
+配置好 github **SSH keys**后,下载**yourname.github.io**库到本地
 ```bash
 # 进入相应的目录,下载hexo分支代码; 此处在家目录下新建了projects目录,进入projects目录进行操作
 PI $ mkdir ~/projects && cd ~/projects
@@ -75,7 +75,7 @@ PI $ mkdir ~/projects && cd ~/projects
 PI $ git clone git@github.com:$yourname/$yourname.github.io.git
 ```
 
-下载完成后,进入**yourname.github.io**目录,安装npm相关包
+下载完成后,进入**yourname.github.io**目录,安装 npm 相关包
 ```bash
 # 安装hexo
 PI $ cd $yourname.github.io && npm install hexo

@@ -599,7 +599,7 @@ uglyURLs = false
     # 说明：仅在生产环境（production）下渲染
 
     # 是否开启（全局设置）
-    enableComments = false
+    enableComments = true
     # 说明：文章的 Front Matter 中的 `comments`
     #      的优先级高于此处
 
@@ -611,9 +611,9 @@ uglyURLs = false
     disqusShortname = ""
 
     ## Valine
-    enableValine = false
-    valineAppId = ""
-    valineAppKey = ""
+    enableValine = true
+    valineAppId = "vcDuMPUhVRWqDQ1hhpoM0FkX-gzGzoHsz"
+    valineAppKey = "BuTIa6PLYnI1Po1eBldfdcT1"
     valinePlaceholder = "Just go go"
     valinePath = ""
     valineAvatar = "mm"
@@ -623,7 +623,7 @@ uglyURLs = false
     valineVisitor = false
     valineHighlight = true
     valineAvatarForce = false
-    valineRecordIP = false
+    valineRecordIP = true
     valineServerURLs = ""
     valineEmojiCDN = ""
     valineEmojiMaps = {}
