@@ -1,9 +1,9 @@
 +++
-title = "认识PEM文件"
+title = "什么是PEM文件"
 description = "PEM 是什么, 我们有哪些日常使用的命令和 PEM 相关"
 date = "2022-03-22T22:30:13+08:00"
 lastmod = "2022-03-22T22:30:13+08:00"
-tags = ["PEM", "证书", "openssl"]
+tags = ["PEM", "证书", "openssl", "CA"]
 dropCap = false
 displayCopyright = false
 gitinfo = false
