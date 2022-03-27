@@ -43,13 +43,15 @@ $ bash openssl-toolkit.sh
         Selection:
 ```
 
-**支持的功能如下:**
-- `Create certificates`(**创建证书**):
+### `Create certificates`(**创建证书**)
   - Self-Signed SSL Certificate (key, csr, crt)
     
     > 生成自签名 SSL 证书  
+    
     自签名证书的优点:  
-    免费(自己生成),随时签发,方便(证书过期处理),对于测试场景
+    - 免费(自己生成)
+    - 随时签发
+    - 方便(证书过期处理)
     ```bash 
     ## 实际使用命令为, 以下 ${pass} 为执行过程中需要手动输入的密码
 
@@ -110,7 +112,7 @@ $ bash openssl-toolkit.sh
     $ rm -f nopassword.key
     ```
 
-- `Convert certificates`(**格式转换**):
+### `Convert certificates`(**格式转换**)
   
   [不同格式证书说明](need.todo2)
   - PEM -> DER
@@ -177,7 +179,7 @@ $ bash openssl-toolkit.sh
     # -nodes: 不加密私钥
     ```
 
-- `Verify certificates`(**证书校验**):
+### `Verify certificates`(**证书校验**)
   - CSR is a public key from the private key
     
     > 校验 `CSR` 是来自私钥的公钥
@@ -219,7 +221,7 @@ $ bash openssl-toolkit.sh
     $ openssl x509 -noout -enddate -in server.crt
     ```
 
-- `Test ssl server`(**测试 `ssl` 服务器**):
+### `Test ssl server`(**测试 `ssl` 服务器**)
   - SSL Certificate handshake
     
     > `SSL` 证书能否完成握手连接
@@ -243,7 +245,7 @@ $ bash openssl-toolkit.sh
     $ timeout 3 openssl s_client -connect www.baidu.com:443 -cipher NULL,LOW
     ```
 
-- `Output certificate information`(**输出证书信息**):
+### `Output certificate information`(**输出证书信息**)
   - Output the details from a certifticate sign request
     
     > 从证书签名请求中(`CSR`)输出详细信息
@@ -259,4 +261,66 @@ $ bash openssl-toolkit.sh
     $ openssl x509 -text -in ${crt}
     ```
     
-本文内容参考自: [OpenSSL Toolkit](https://community.microfocus.com/cyberres/edirectory/w/edirectorytips/25358/openssl-toolkit)
+## 什么是 `DN`
+- 什么是 `DN`: `Distingusied Name`
+  专有名称 (DN) 是描述证书中的标识信息的术语, 是证书本身的一部分. 
+  
+  证书包含证书所有者或请求者的 `DN` 信息和颁发证书的 `CA`（称为颁发者 `DN`）. 根据颁发证书的 `CA` 的标识策略, `DN` 可以包含各种信息.
+  
+  每个 `CA` 都有一个策略来确定 `CA` 需要哪些识别信息来颁发证书. 一些公共 `Internet` 证书颁发机构可能需要很少的信息, 例如姓名和电子邮件地址. 其他公共 `CA` 可能需要更多信息, 并要求在颁发证书之前更严格地证明该识别信息. 例如，支持公钥基础设施交换 (`PKIX`) 标准的 `CA` 可能要求请求者在颁发证书之前通过注册机构 (`RA`) 验证身份信息. 因此, 如果划接受证书并将其用作凭证, 需要查看 `CA` 的标识要求来确定其要求是否符合自身的安全需求.
+  
+  可以使用数字证书管理器 (`DCM`) 来操作私有证书颁发机构并颁发私有证书. 此外，还可以使用 `DCM` 为公共 `Internet CA` 为颁发的证书生成 `DN` 信息和密钥对. 
+  
+  **为任一类型的证书提供的 DN 信息包括：**
+  - Certificate owner's common name
+  - Organization
+  - Organizational unit
+  - Locality or city
+  - State or province
+  - Country or region
+  
+  **一些额外的 `DN` 信息，包括：**
+  - Version 4 or 6 IP address
+  - Fully qualified domain name
+  - E-mail address
+  
+- 以下列出一些 `DN` 首选项
+
+| **DN** | **信息** | **描述** | **示例** |
+|:---:|:--- | :--- | :---|
+|CN	|Common Name | 希望被保护的完全限定域名(`FQDN`) | `*.wikipedia.org` |
+| O	| Organization Name| 通常是公司或实体的法定名称，应包含任何后缀，例如 `Ltd. Inc.` 或 `Corp.` |Wikimedia Foundation, Inc.|
+| OU | Organizational Unit|内部组织部门/部门名称 |`IT`|
+|L |Locality |镇、市、村等的名称 | `ShenZhen` |
+|ST|State | 省、地区、县或州, 不可以缩写 | `GuangDong` |
+| C| Country| 组织所在国家/地区的两个字母 `ISO` 代码|`CN` |
+|EMAIL|Email Address|组织联系人，通常是证书管理员或 `IT` 部门的联系人 | |
+
+## `CA`/`ca.crt`/单双向认证
+> 这一段是截取 [SSL-TLS 双向认证：SSL-TLS 工作原理](https://blog.csdn.net/espressif/article/details/78541410) 中的部分内容, 因为已经讲解的很清楚了, 就不再自己复述一遍了
+
+  `CA` 全称为 `Certificate Authotiry`, 证书授权中心, 又被成为根证书. 它类似于工商管理局, 给公司企业颁发营业执照.
+  `CA` 有两大主要特性：
+  - `CA` 本身是受国际认可, 受信任的
+  - `CA` 需要给它受信任的对象颁发证书
+  
+  哪里可以查看证书:
+  - `Chrome` 浏览器：设置 -> 高级 -> 管理证书 -> 授权中心
+  - `Ubuntu`: `/etc/ssl/certs`
+  
+**`CA` 的证书 `ca.crt` 与 `SSL Server` 的证书 `Server.crt` 的关系**
+- `SSL Server` 自己生成一个密钥 `KEY`, 内置包含 `Private Key/Public Key`, 私钥加密, 公钥解密.
+- `Server` 利用密钥生成一个请求文件 `server.csr`, 请求文件中包含有 `Server` 的一些信息, 如域名/申请者/公钥等.
+- `Server` 将请求文件 `server.csr` 递交给 `CA`, 然后 `CA` 对其验明正身后, 将用 `ca.key` 和 `server.csr` 加密生成 `server.crt` 证书.
+- 由于 `ca.key` 和 `ca.crt` 是一对, 于是以后客户端通过使用 `ca.crt` 就可以解密认证 `server.crt` 证书了.
+
+**什么是 `SSL/TLS` 单向认证/双向认证**
+- 单向认证, 指的是只有一个对象校验对端的证书合法性. 通常都是 `client` 来校验服务器的合法性. 那么 `client` 需要一个 `ca.crt`, 服务器需要 `server.crt，server.key`.
+- 双向认证, 指的是相互校验, 服务器需要校验每个 `client`, `client` 也需要校验服务器. `server` 需要 `server.key`,`server.crt`,`ca.crt`；`client` 需要 `client.key`, `client.crt`, `ca.crt`.
+
+
+本文内容参考自: 
+- [OpenSSL Toolkit](https://community.microfocus.com/cyberres/edirectory/w/edirectorytips/25358/openssl-toolkit)
+- [Distinguished name](https://www.ibm.com/docs/en/i/7.1?topic=concepts-distinguished-name)
+- [Certificate_signing_request](https://en.wikipedia.org/wiki/Certificate_signing_request)
+- [SSL-TLS 双向认证：SSL-TLS 工作原理](https://blog.csdn.net/espressif/article/details/78541410)
