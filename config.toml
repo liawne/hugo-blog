@@ -2,7 +2,7 @@
 # 站点配置
 
 baseURL = "https://liawne.github.io/"
-title = "LIAWNE"
+title = "NEWIUR"
 languageCode = "zh-CN"
 hasCJKLanguage = true
 # 版权信息（支持 Markdown）
@@ -98,7 +98,7 @@ uglyURLs = false
 # 作者信息
 [author]
     # 名字
-    name = "liawne"
+    name = "newiur"
     # 邮箱
     email = "rwen913@gmail.com"
     # 座右铭或简介
@@ -280,8 +280,9 @@ uglyURLs = false
     # 如果否，则会使用你的站点标题作为默认值，并
     # 以文字的形式显示，下方可配置字号和字色。字
     # 体请到底部的字体部分配置。单位：em。
-    siteBrandFontSize = 1
-    siteBrandFontColor = "var(--color-contrast-high)"
+    siteBrandFontSize = 1.5
+    #siteBrandFontColor = "var(--color-contrast-high)"
+    siteBrandFontColor = "#302a75"
 
 
     ######################################
@@ -311,11 +312,11 @@ uglyURLs = false
     # 3. posts     文章摘要
     # 4. page      普通页面
 
-    homeLayout = "poetry"
+    homeLayout = "footage"
 
     ## Poetry
     # Verse (Markdown supported)
-    homePoetry = ["莫听穿林打叶声，何妨吟啸且徐行。", "竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。", "","料峭春风吹酒醒，微冷，山头斜照却相迎。", "回首向来萧瑟处，归去，也无风雨也无晴。"]
+    homePoetry = ["莫听穿林打叶声，", "何妨吟啸且徐行。", "竹杖芒鞋轻胜马，谁怕？", "一蓑烟雨任平生。", "","料峭春风吹酒醒，微冷，", "山头斜照却相迎。", "回首向来萧瑟处，归去，", "也无风雨也无晴。"]
     # Padding of links at the bottom
     # Unit: em
     homeLinksPadding = 1
@@ -323,13 +324,13 @@ uglyURLs = false
     ## 「视频片段」
     homePoster = ""
     homeVideoWebm = ""
-    homeVideoMp4 = ""
+    homeVideoMp4 = "/uploads/horizon.mp4"
     homeLogo = "/icons/android-chrome-512x512.png"
-    homeLogoLink = "/home/"
-    homeTitle = "Liawne"
-    homeMotto = "just go go"
-    homeDescription = "莫听穿林打叶声，何妨吟啸且徐行。竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。料峭春风吹酒醒，微冷，山头斜照却相迎。回首向来萧瑟处，归去，也无风雨也无晴。"
-    homeKeywords = "个人博客，关键词：生活、技术、计算机"
+    homeLogoLink = "/archives/"
+    homeTitle = "newiur"
+    homeMotto = ""
+    homeDescription = ""
+    homeKeywords = ""
     homeLinksDelimiter = ""
 
 
@@ -340,7 +341,7 @@ uglyURLs = false
     siteLogo = "/icons/apple-touch-icon.png"
     # 说明：用于 JSON-LD、Open Graph
 
-    siteDescription = "Liawne's blog"
+    siteDescription = "newiur's blog"
     # Note: used for HTML head meta, JSON-LD,
     #       Open Graph, Atom, RSS
 
@@ -752,7 +753,7 @@ uglyURLs = false
     # 注意：请遵循格式 https://gohugo.io/functions/format/
 
     # 是否显示发布时间
-    displayPublishedDate = true
+    displayPublishedDate = false
     # 发布时间的图标
     publishedDateIcon = "calendar-alt"
 
@@ -762,7 +763,7 @@ uglyURLs = false
     modifiedDateIcon = "calendar-check"
 
     # 是否显示过期时间
-    displayExpiredDate = true
+    displayExpiredDate = false
     # 过期时间的图标
     expiredDateIcon = "calendar-times"
 
@@ -784,7 +785,7 @@ uglyURLs = false
     readingTimeIcon = "clock"
 
     # 是否显示不蒜子页面浏览量
-    displayBusuanziPagePV = false
+    displayBusuanziPagePV = true
     # 不蒜子页面浏览量的图标
     busuanziPagePVIcon = "eye"
     # 说明：仅在生产环境（production）下渲染
@@ -1140,7 +1141,7 @@ uglyURLs = false
     # 相关文章
 
     # 是否开启
-    enableRelatedPosts = true
+    enableRelatedPosts = false
 
     # 是否显示（全局设置）
     displayRelatedPosts = true
@@ -1174,7 +1175,7 @@ uglyURLs = false
     #      新的文章；如果你点击右边的下篇，跳转
     #      的是一篇更旧的文章。
 
-    enablePostNav = false
+    enablePostNav = true
 
     # Apply to posts that below the same
     # top level section only?
@@ -1208,7 +1209,7 @@ uglyURLs = false
     displayBackToTopInHome = true
 
     # 是否在移动端显示
-    displayBackToTopOnMobile = false
+    displayBackToTopOnMobile = true
 
     # 按钮图标
     backToTopIcon = "arrow-up"
@@ -1236,7 +1237,8 @@ uglyURLs = false
     # 年份与作者之间的图标，留空（""）则无
     iconBetweenYearAndAuthor = "heart"
     # 图标颜色
-    iconColor = "#f06292"
+    #iconColor = "#f06292"
+    iconColor = "#b50000"
     # 是否开启图标的跳动效果
     iconAnimation = true
 
@@ -1244,12 +1246,12 @@ uglyURLs = false
     displayPoweredBy = false
 
     # 是否显示站点的版权信息
-    displaySiteCopyright = true
+    displaySiteCopyright = false
 
     # 自定义页脚（支持 Markdown）
     customFooter = ""
 
-    displayBusuanziSiteUVAndPV = false
+    displayBusuanziSiteUVAndPV = true
     busuanziSiteUVText = "本站访客数"
     busuanziSiteUVIcon = "user"
     busuanziSitePVText = "本站访问量"
@@ -1270,7 +1272,7 @@ uglyURLs = false
     enableLangToggle = false
 
     # 是否在首页隐藏多语言按钮
-    hideLangToggleInHome = false
+    hideLangToggleInHome = true
 
     # 是否自动隐藏多语言按钮
     autoHideLangToggle = true
@@ -1287,7 +1289,7 @@ uglyURLs = false
     # 是否开启竖直滚动
     enableOverflowY = true
     # 最大高度
-    maxHeight = 20
+    maxHeight = 30
     # 单位：em
 
     # 是否开启复制
