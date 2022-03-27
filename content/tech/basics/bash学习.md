@@ -4,6 +4,7 @@ date: 2022-03-06 10:42:55
 tags: ['bash', 'linux', '基础知识']
 categories: ['技术', '学习笔记']
 description: "通过advanced-bash-scripting学习bash的笔记内容"
+toc: true
 ---
 ## 变量及操作符
 

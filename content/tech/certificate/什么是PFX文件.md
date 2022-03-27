@@ -7,7 +7,7 @@ tags = ["PFX", "证书", "openssl", "CA"]
 dropCap = false
 displayCopyright = false
 gitinfo = false
-draft = true
+draft = false
 toc = true
 +++
 
@@ -37,6 +37,7 @@ toc = true
 - 从 `pfx` 文件中提取内容
 
   可以从 `pfx` 文件中提取出私钥等, 需要知道创建 `pfx` 文件时设置的密码.
+  参数说明可以参考: [openssl-toolkit使用](https://www.ruisum.top/tech/certificate/openssl-toolkit%E4%BD%BF%E7%94%A8)
   ```bash 
   # 第一步, 提取私钥; 系统会再次提示我们提供新密码来保护正在创建的 .key 文件
   $ openssl pkcs12 -in output.pfx -nocerts -out private.key

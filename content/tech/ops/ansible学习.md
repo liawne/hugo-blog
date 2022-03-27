@@ -9,9 +9,9 @@ description: "讲解ansible及ansible-playbook的使用"
 # learning ansible
 *本文内容参考自[朱双印ansible笔记](https://www.zsythink.net/archives/2481)*
 
-### 配置主机清单 ###
+## 配置主机清单 ###
 主机清单配置有两种方式
-#### \# ini方式
+### \# ini方式
 ```ini
 # 1,如下示例:
 [ctl]
@@ -25,7 +25,7 @@ ctl
 [nova-compute:children]
 nova
 ```
-#### \#  yaml方式
+### \#  yaml方式
 ```yaml
 # 1,如下示例:
 all:
@@ -49,8 +49,8 @@ all:
           ansible_pass: '123.com'
 ```
 
-### 常用模块 ###
-#### \#  文件类操作
+## 常用模块 ###
+### \#  文件类操作
 1,copy: 将ansible主机上的文件拷贝至远端主机
   - 同fetch类似,不过操作动作相反,fetch是从远端主机拿文件到ansible主机
   - 可使用content直接代替src
@@ -80,7 +80,7 @@ all:
 6,replace: replace模块可以根据我们指定的正则表达式替换文件中的字符串，文件中所有被正则匹配到的字符串都会被替换
   - 使用方式ansible-doc -s replace查看
 
-#### \#  命令类操作
+### \#  命令类操作
 1,command: 在远端主机上执行命令
   - 使用command模块在远程主机中执行命令时，不会经过远程主机的shell处理，在使用command模块时，如果需要执行的命令中含有重定向、管道符等操作时，这些符号也会失效，比如”<“, “>”, “|”, “;” 和 “&” 这些符号，如果你需要这些功能，需要使用shell模块
   - 具体使用方式,参考ansible-doc -s command
@@ -91,7 +91,7 @@ all:
 3,scripts: 在远端主机上执行ansible主机上的脚本,脚本在ansible主机上,不需要拷贝到远端主机
   - 具体使用方式,参考ansible-doc -s scripts
 
-#### \#  系统类操作
+### \#  系统类操作
 1,cron: 管理远端主机上的定时任务,功能同crontab
   - 具体使用方式,参考ansible-doc -s cron
 
@@ -105,14 +105,14 @@ all:
 4,groupo: 管理远端主机上的组,类似命令groupmod
   - 具体使用方式,参考ansible-doc -s group
 
-#### \#  包管理类操作
+### \#  包管理类操作
 1,yum_repository: 管理远端主机上的yum仓库
   - 具体使用方式,参考ansible-doc -s yum_repository
 
 1,yum: 通过远端主机上的yum管理软件包
   - 具体使用方式,参考ansible-doc -s yum
 
-### 认识ansible-playbook ###
+## \#认识ansible-playbook ###
 1,ansible-playbook的使用,可以理解为ansible -m <module_name> -a 'xxxx'的转换,将命令行使用模块操作的内容写成脚本内容,按照脚本内容完成相关操作
 
 2,上述脚本在ansible-playbook中称作为'playbook',即剧本
@@ -123,7 +123,7 @@ all:
   - 在ansible调用模块或者ansible-playbook执行相应play时,输出内容会有颜色区分,黄色表示有修改,绿色表示么有修改;区别是远端的内容是否满足我们的预期
   - ansible是”以结果为导向的”，我们指定了一个”目标状态”，ansible会自动判断，”当前状态”是否与”目标状态”一致，如果一致，则不进行任何操作，如果不一致，那么就将”当前状态”变成”目标状态”，这就是”幂等性”，”幂等性”可以保证我们重复的执行同一项操作时，得到的结果是一样的
 
-### 使用handlers ###
+## \#使用handlers ###
 1,handlers的使用场景:
   - 有个任务需要修改nginx的配置文件,将listen端口由8080改为8088,使用handler可以在nginx配置文件有修改的环境上重启nginx,没有修改的不会出发重启nginx
   - handlers可以理解为另一种tasks,handlers是另一种'任务列表',handlers中的任务会被tasks中的任务调用;
@@ -255,7 +255,7 @@ all:
     shell: 'echo handler2'
 ```
 
-### 使用tags ###
+## \#使用tags ###
 1,写了一个很长的playbook,在调试时只想跑其中很少的一部分,tag在这种场景下可以使用,指定执行哪些任务,不执行哪些任务
   - 如下示例:
 ```yaml
@@ -331,7 +331,7 @@ tags: ['testing', 't1']
       state: started
 ```
 
-### 使用变量(一) ###
+## \#使用变量(一) ###
 1,怎么定义变量
   - 变量由数字,字母,下划线组成,要以字母开头
   - ansible的关键字不能作为变量名
@@ -417,7 +417,7 @@ nginx:
       state: touch
 ```
 
-### 使用变量(二) ###
+## \#使用变量(二) ###
 1,在playbook执行前,有一个Gathering Facts的动作,调用的是setup模块; 这些信息会保存在对应的变量中，我们在playbook中可以使用这些变量,我们可以称这些信息为facts信息
   - setupa模块的返回值是json格式的,方便返回时内容展示
   - setup模块可以获取远端主机很详尽的信息,若需要过滤相关信息,可以使用setup的filter参数(支持通配符)
@@ -454,7 +454,7 @@ msg2='test message 2'
       var: testvar
 ```
 
-### 使用变量(三) ###
+## \#使用变量(三) ###
 1,变量注册
 - ansible模块在执行之后都会有一些返回值,默认情况下,这些返回值不会显示而已;我们可以把这些返回值写入到某个变量中,我们可以通过引用相应的变量获取到这些返回值,将模块的返回值写入到变量中,这种方式称为'注册变量'; 如下为变量注册的的一个范例
 ```yaml
@@ -527,7 +527,7 @@ ok: [master] => {
   - 命令行传入,直接在ansible-playbook执行时增加-e 'key=value'即可,可有多个,变量赋值有多种方式,还可以是json格式
   - 文件传入,类似命令行-e "@变量文件绝对路径"
 
-### 使用变量(四),register,set_fact ###
+## \#使用变量(四),register,set_fact ###
 1,配置主机清单时,可以配置主机或主机组变量,但只对配置的主机或主机组生效
 ```yaml
 ## 主机配置,配置/etc/ansible/hosts如下
@@ -627,7 +627,7 @@ $ ansible testB -m shell -a 'echo {{test_group_var1}}'
 ```
   - 如果想要在tasks中给变量自定义信息，并且在之后的play操作同一个主机时能够使用到之前在tasks中定义的变量时，则可以使用set_facts定义对应的变量
 
-### 使用变量(五),内置变量,host_vars ###
+## \#使用变量(五),内置变量,host_vars ###
 1,ansible有一些内置变量可供使用,这些变量被ansible保留,我们定义变量时不能使用
   - ansible_version
 ```bash
@@ -778,7 +778,7 @@ node2 | SUCCESS => {
 
 9,除了直接在hosts文件中定义主机变量和组变量，还有另外一种方法也可以定义主机变量和组变量，我们可以在清单文件的同级目录中创建两个目录，这两个目录的名字分别为”group_vars”和”host_vars”，我们可以将组变量文件放在”group_vars”目录中，将主机变量文件放在”host_vars”目录中，这样ansible就能获取到对应组变量和主机变量
 
-### 使用循环(一),with_items的使用 ###
+## \#使用循环(一),with_items的使用 ###
 1,使用with_items处理循环的内容
   - 普通示例:
 ```yaml
@@ -851,7 +851,7 @@ with_items: [1, 2, 3]
     with_items: "{{returnvalue.results}}"
 # 先使用循环重复的调用了shell模块，然后将shell模块每次执行后的返回值注册到了变量”returnvalue”中，之后，在使用debug模块时，通过返回值”results”获取到了之前每次执行shell模块的返回值（shell每次执行后的返回值已经被放入到item变量中），最后又通过返回值”stdout”获取到了每次shell模块执行后的标准输出
 ```
-### 使用循环(二),对列表循环的操作 ###
+## \#使用循环(二),对列表循环的操作 ###
 1,对序列循环有几个关键字
   - with_items: 当循环的序列元素也是列表时,展开与预期的有差异,会将所有的列表展开
   - with_list: 其他动作与with_items相同,只有在嵌套列表循环时有差异,子列表将会作为元素使用
@@ -904,7 +904,7 @@ ok: [node2] => (item=[3, u'c']) => {
     ]
 }
 ```
-### 使用循环(三),嵌套循环 ###
+## \#使用循环(三),嵌套循环 ###
 1,with_cartesian和with_nested
   - 当我们需要两个列表嵌套循环时,可以使用with_cartesian或者with_nested,将每个小列表中的元素按照”笛卡尔的方式”组合后，循环的处理每个组合,如下示例
 ```yaml
@@ -921,7 +921,7 @@ ok: [node2] => (item=[3, u'c']) => {
     - [ a, b, c ]
     - [ test1, test2 ]
 ```
-### 使用循环(四),序列索引循环 ###
+## \#使用循环(四),序列索引循环 ###
 1,使用到with_indexed_items,在处理列表中的每一项时，按照顺序为每一项添加了编号,如下示例:
 ```yaml
 ---
@@ -974,7 +974,7 @@ ok: [node2] => (item=(2, u'test3')) => {
   - ”with_indexed_items”会将嵌套的两层列表”拉平”，”拉平”后按照顺序为每一项编号
   - 当多加了一层嵌套以后，”with_indexed_items”并不能像”with_flattened”一样将嵌套的列表”完全拉平”，第二层列表中的项如果仍然是一个列表，”with_indexed_items”则不会拉平这个列表，而是将其当做一个整体进行编号
 
-### 使用循环(五),with_sequence,with_random_choice ###
+## \#使用循环(五),with_sequence,with_random_choice ###
 1,with_sequence
 - 使用with_sequence生成序列,with_sequence可以按照顺序生成数字序列,如下示例:
 ```yaml
@@ -1019,7 +1019,7 @@ ok: [node2] => (item=(2, u'test3')) => {
     - 4
     - 5
 ```
-### 使用循环(六),with_dict,with_subelements,with_file ###
+## \#使用循环(六),with_dict,with_subelements,with_file ###
 1,with_dict,循环遍历字典元素,如下示例:
 ```yaml
 ---
@@ -1189,7 +1189,7 @@ ok: [node2] => (item=({u'gender': u'female', u'name': u'alice'}, u'Music')) => {
 "msg": "bob 's hobby is VideoGame"
 "msg": "alice 's hobby is Music"
 ```
-### 使用循环(七) with_file, with_fileglob ###
+## \#使用循环(七) with_file, with_fileglob ###
 1, ansible主机中有几个文件,若需要获取到这些文件的内容，可以使用with_file关键字，循环的获取到这些文件的内容
   - 如下示例:
 ```yaml
@@ -1233,7 +1233,7 @@ ok: [node2] => (item=/testdir/test.sh) => {
 # 需要注意的是，with_fileglob只会匹配指定目录中的文件，而不会匹配指定目录中的目录
 ```
 
-### 条件判断(六),with_dict,with_subelements,with_file ###
+## \#条件判断(六),with_dict,with_subelements,with_file ###
 1,绝大多数语言中，都使用if作为条件判断的关键字，而在ansible中，条件判断的关键字是when
   - 如下示例:
 ```yaml
@@ -1356,7 +1356,7 @@ not  :取反，对一个操作体取反
     when: returnmsg.rc != 0
 ```
 
-### 条件判断与tests ###
+## \#条件判断与tests ###
 1,在ansible中也有类似bash中test的用法,不过是借助jinja2的tests，借助tests，可以进行一些判断操作，tests会将判断后的布尔值返回，如果条件成立，返回true，否则返回false，通常在条件判断时使用到tests
   - 如下示例:
 ```yaml
@@ -1610,7 +1610,7 @@ not  :取反，对一个操作体取反
     when: testvar3 is number
  # 上例playbook中只有testvar1和testvar3会被判断成数字,testvar2不会
 ```
-### 条件判断与block ###
+## \#条件判断与block ###
 1,在ansible中,可以使用"block"关键字将多个任务整合成一个"块",这个"块"将被当做一个整体,我们可以对这个"块"添加判断条件,当条件成立时,则执行这个块中的所有任务
   - 如下示例:
 ```yaml
@@ -1698,7 +1698,7 @@ not  :取反，对一个操作体取反
           msg: "This always executes"
 # 如上例所示,block中有多个任务,rescue中也有多个任务,上例中故意执行"/bin/false"命令,模拟任务出错的情况,当block中的'/bin/false'执行后,其后的debug任务将不会被执行,因为'/bin/false'模拟出错,出错后直接执行rescue中的任务,在执行rescue中的任务时,会先输出 ‘I caught an error',然后又在rescue中使用'/bin/false'模拟出错的情况,出错后之后的debug任务不会被执行,直接执行always中的任务,always中的任务一定会被执行,无论block中的任务是否出错
 ```
-### 条件判断与错误处理 ###
+## \#条件判断与错误处理 ###
 1,使用fail模块来处理出错
   - 如下示例:
 ```yaml
@@ -1764,7 +1764,7 @@ not  :取反，对一个操作体取反
     changed_when: false
 # 当将'changed_when'直接设置为false时,对应任务的状态将不会被设置为'changed',如果任务原本的执行状态为'changed',最终则会被设置为'ok',所以,上例playbook执行后,shell模块的执行状态最终为'ok'
 ```
-### 过滤器 ###
+## \#过滤器 ###
 1,过滤器是一种能够帮助我们处理数据的工具,其实,ansible中的过滤器功能来自于jinja2模板引擎
 
 2,过滤器有些是jinja2内置的,有些是ansible特有的,如果这些过滤器都不能满足你的需求,jinja2也支持自定义过滤器
@@ -2028,7 +2028,7 @@ not  :取反，对一个操作体取反
     with_items: "{{ paths }}"
 # 没有对文件是否有mode属性进行判断,而是直接调用了file模块的mode参数,将mode参数的值设定为了"{{item.mode | default(omit)}}",这是什么意思呢？它的意思是,如果item有mode属性,就把file模块的mode参数的值设置为item的mode属性的值,如果item没有mode属性,file模块就直接省略mode参数,'omit'的字面意思就是"省略",换成大白话说就是:[有就用,没有就不用,可以有,也可以没有]
 ```
-### 变量(六)include_vars ###
+## \#变量(六)include_vars ###
 1,通过'vars_files'可以将文件中的变量引入playbook,以便在task中使用,但是vars_files加载时是静态的引入变量,即后续在vars_files中新增的变量,无法被引用
   - vars_files变量文件在ansible控制节点中,与目标主机无关
   - 示例如下:
@@ -2187,7 +2187,7 @@ tasks:
   - debug:
       msg: "{{return_val.ansible_included_var_files}}"
 ```
-### 过滤器(二) json_query ###
+## \#过滤器(二) json_query ###
 1,ansible可以通过include_vars加载日志文件,debug格式化输出json/yaml内容,方便查看
   - json是yaml的子集,yaml是json的超集,yaml格式的数据和json格式的数据是可以互相转换的
   - 如下示例:
@@ -2390,7 +2390,7 @@ ok: [me] => {
       msg: "{{item}}"
     with_items: "{{ logs | json_query('[*].files[*].logUrl') }}"
 ```
-### 过滤器(三) 其他过滤器 ###
+## \#过滤器(三) 其他过滤器 ###
 1,其他一些常用的过滤器
 ```yaml
 ---
@@ -2567,7 +2567,7 @@ ok: [me] => {
       msg: "{{ '123123' | password_hash('sha512', 65534|random(seed=inventory_hostname)|string) }}"
 ```
 
-### lookup插件 ###
+## \#lookup插件 ###
 1,ansible中有很多种类的插件,比如之前总结的”tests”,也是插件的一种,ansible官网总结了各个插件的作用,并且将这些插件按照功能进行了分类
   - https://docs.ansible.com/ansible/latest/plugins/plugins.html
 
@@ -2716,7 +2716,7 @@ ok: [me] => {
   #你也可以访问官网的lookup插件列表页面,查看各个插件的用法
   #https://docs.ansible.com/ansible/latest/plugins/lookup.html
 ```
-### 循环(八) ###
+## \#循环(八) ###
 1,在新版本的ansible中,官方推荐的循环的使用方式不同,在2.6推荐的方式为loop加lookup和loop加filter
   - loop的简单使用方式:
 ```yaml
@@ -3037,7 +3037,7 @@ ok: [me] => {
     loop_control:
       label: "{{item.key}}"
 ```
-### include ###
+## \#include ###
 1,ansible中有类似编程语言中类似函数调用的功能,就是include,通过include,可以在一个playbook中包含另一个文件
   - include模块可以指定一个文件,这个文件中的内容是一个任务列表（一个或多个任务）,使用include模块引用对应的文件时,文件中的任务会在被引用处执行,就像写在被引用处一样
 ```yaml
@@ -3262,7 +3262,7 @@ ok: [me] => {
   - c
 # 将loop_var选项的值设置为"outer_item",这表示,我们将外层循环的item值存放在了"outer_item"变量中,在B文件中的debug任务中,同时输出了"outer_item"变量和"item"变量的值
 ```
-### include(二) ###
+## \#include(二) ###
 1,"include"的某些原始用法在之后的版本中可能会被弃用,在之后的版本中,会使用一些新的关键字代替这些原始用法
 
 2,include_task模块
@@ -3488,7 +3488,7 @@ node2                     : ok=8    changed=0    unreachable=0    failed=0
   - debug:
       msg: "test task in intest7.yml"
 ```
-### jinja2模板(一) ###
+## \#jinja2模板(一) ###
 1,对远端机器进行操作时,很多场景下都需要根据主机信息进行配置,这个时候可以使用template模块来完成相应的目的
   - 示例如下:
 ```yaml
@@ -3607,25 +3607,25 @@ False
 ## 一些基础的数据类型,都可以包含在"{{  }}"中,jinja2本身就是基于python的模板引擎,所以,python的基础数据类型都可以包含在"{{  }}"中
 # cat test.j2
 jinja2 test
-### str
+## \#str
 {{ 'testString' }}
 {{ "testString" }}
-### num
+## \#num
 {{ 15 }}
 {{ 18.8 }}
-### list
+## \#list
 {{ ['Aa','Bb','Cc','Dd'] }}
 {{ ['Aa','Bb','Cc','Dd'].1 }}
 {{ ['Aa','Bb','Cc','Dd'][1] }}
-### tuple
+## \#tuple
 {{ ('Aa','Bb','Cc','Dd') }}
 {{ ('Aa','Bb','Cc','Dd').0 }}
 {{ ('Aa','Bb','Cc','Dd')[0] }}
-### dic
+## \#dic
 {{ {'name':'bob','age':18} }}
 {{ {'name':'bob','age':18}.name }}
 {{ {'name':'bob','age':18}['name'] }}
-### Boolean
+## \#Boolean
 {{ True }}
 {{ true }}
 {{ False }}
@@ -3635,25 +3635,25 @@ jinja2 test
 生成文件内容如下:
 # cat test
 jinja2 test
-### str
+## \#str
 testString
 testString
-### num
+## \#num
 15
 18.8
-### list
+## \#list
 ['Aa', 'Bb', 'Cc', 'Dd']
 Bb
 Bb
-### tuple
+## \#tuple
 ('Aa', 'Bb', 'Cc', 'Dd')
 Aa
 Aa
-### dic
+## \#dic
 {'age': 18, 'name': 'bob'}
 bob
 bob
-### Boolean
+## \#Boolean
 True
 True
 False
@@ -3743,7 +3743,7 @@ jinja2 test
 jinja2 test
 ```
 
-### jinja2模板(二) ###
+## \#jinja2模板(二) ###
 1,结合if的使用
   - 通用结构
 ```yaml
@@ -3915,7 +3915,7 @@ something
 bob's son is tom
 tom's son is jerry
 ```
-### jinja2模板(三) ###
+## \#jinja2模板(三) ###
 1,jinja2模板文件中需要使用特殊字符
   - 最简单的方法就是直接在"双花括号"中使用引号将这类符号引起,当做纯粹的字符串进行处理
 ```jinja
@@ -3997,7 +3997,7 @@ abc
      {{ testfunc( ) }}
      {{ testfunc(666) }}
 ```
-### ansible中的role ###
+## \#ansible中的role ###
 1,ansible官方定义的规范
   - role的标准目录结构
 ```bash
@@ -4102,7 +4102,7 @@ allow_duplicates: true
   debug:
     msg: "this is a test handler"
 ```
-### 常用技巧(一) ###
+## \#常用技巧(一) ###
 1,技巧一,在ansible中使用python字符串的一些特性
   - ansible基于python实现,当我们在ansible中处理字符串时,能够借助一些python的字符串特性,比如,在python中可以使用中括号(方括号)截取字符串中的一部分,在ansible中也可以利用这一特性
 ```bash
@@ -4242,7 +4242,7 @@ ok: [me] => {
       src: "/tmp/test.tar"
       dest: "/tmp"
 ```
-### 常用技巧(二) ###
+## \#常用技巧(二) ###
 1,向列表中追加项
   - 如下内容:
 ```yaml
