@@ -1,7 +1,7 @@
 ##########################################
 # 站点配置
 
-baseURL = "https://liawne.github.io/"
+baseURL = "https://ruisum.top/"
 title = "NEWIUR"
 languageCode = "zh-CN"
 hasCJKLanguage = true
@@ -1287,7 +1287,7 @@ uglyURLs = false
     enableHighlight = true
 
     # 是否开启竖直滚动
-    enableOverflowY = true
+    enableOverflowY = false
     # 最大高度
     maxHeight = 30
     # 单位：em

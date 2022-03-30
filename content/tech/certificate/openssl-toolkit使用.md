@@ -60,15 +60,19 @@ $ bash openssl-toolkit.sh
     #    genrsa : 生成一个 rsa key 文件, 也即密钥文件, 此处只会生成私钥文件, 不会生成公钥, 因为公钥提取自私钥
     #    -passout: 对生成的 RSA 秘钥文件施加密码保护, 结合 pass 使用
     #    pass:${pass} : ${pass} 为交互输入时给定的密码, 这里作用是设置私钥的密码
-    #    -des3: Triple-DES Cipher, 指定加密私钥文件用的算法, 三重数据加密算法的意思, 对私钥加密密码 ${pass} 应用三次DES加密算法
+    #    -des3: Triple-DES Cipher, 指定加密私钥文件用的算法, 三重数据加密算法的意思, 对私钥加密密码 ${pass} 
+    #           应用三次DES加密算法
     #    2048: 指生成多少位的私钥, 还可以为512/1024等
     
     $ openssl req -sha256 -new -key server.key -out server.csr -passin pass:${pass}
     # 2. 通过 server.key 私钥, 生成 server.csr 文件
-    #    如果要一个 CA(Certificate Authority) 认证机构颁发 CRT 证书的话, 需要先提供一个 CSR(Certificate Signing Request) 请求文件.
+    #    如果要一个 CA(Certificate Authority) 认证机构颁发 CRT 证书的话, 需要先提供
+    #    一个 CSR(Certificate Signing Request) 请求文件.
     #    这个 CSR 请求文件中, 会包含公钥(Public Key), 以及一些申请者信息 (DN Distingusied Name).
-    #    DN 信息中最重要的部分是 Common Name (CN), 需要与后续安放 CRT 证书的服务器 FQDN(Fully Qualified Domain Name) 完全一致才行. 
+    #    DN 信息中最重要的部分是 Common Name (CN), 需要与后续安放 CRT 证书的服务器 
+    #    FQDN(Fully Qualified Domain Name) 完全一致才行. 
     #    openssl-toolkit 会在执行过程中要求输入 DN 信息, 请按实际情况填写相应内容.
+    #
     #    req: PKCS#10 X.509 CSR 管理相关
     #    -new: 生成一个新的 CSR 请求文件
     #    -key: 指定已有的私钥文件
@@ -131,8 +135,9 @@ $ bash openssl-toolkit.sh
     $ openssl crl2pkcs7 -nocrl -certfile server.pem -out server.p7b
     # crl2pkcs7: CRL to PKCS#7
     # -nocrl: 通常 CRL 包含在输出文件中. 使用此选项时, 输出文件中不会包含 CRL, 并且不会从输入文件中读取 CRL.
-    # crl(Certificate Revocation List): 证书吊销列表, 是 PKI 系统中的一个结构化数据文件, 该文件包含了证书颁发机构 (CA) 已经吊销的证书的序列号及其吊销日期. 
-    #                                   CRL 文件中还包含证书颁发机构信息、吊销列表失效时间和下一次更新时间, 以及采用的签名算法等.
+    # crl: (Certificate Revocation List)证书吊销列表, 是 PKI 系统中的一个结构化数据文件, 
+    #      该文件包含了证书颁发机构 (CA) 已经吊销的证书的序列号及其吊销日期. CRL 文件中还包含证书颁发机构信息、
+    #      吊销列表失效时间和下一次更新时间, 以及采用的签名算法等.
     ```
   - PEM -> PFX
     
@@ -265,11 +270,9 @@ $ bash openssl-toolkit.sh
 - 什么是 `DN`: `Distingusied Name`
   专有名称 (DN) 是描述证书中的标识信息的术语, 是证书本身的一部分. 
   
-  证书包含证书所有者或请求者的 `DN` 信息和颁发证书的 `CA`（称为颁发者 `DN`）. 根据颁发证书的 `CA` 的标识策略, `DN` 可以包含各种信息.
+  向不同的 `CA` 申请证书, 对应要求的 `DN` 信息不一样.
   
-  每个 `CA` 都有一个策略来确定 `CA` 需要哪些识别信息来颁发证书. 一些公共 `Internet` 证书颁发机构可能需要很少的信息, 例如姓名和电子邮件地址. 其他公共 `CA` 可能需要更多信息, 并要求在颁发证书之前更严格地证明该识别信息. 例如，支持公钥基础设施交换 (`PKIX`) 标准的 `CA` 可能要求请求者在颁发证书之前通过注册机构 (`RA`) 验证身份信息. 因此, 如果划接受证书并将其用作凭证, 需要查看 `CA` 的标识要求来确定其要求是否符合自身的安全需求.
-  
-  可以使用数字证书管理器 (`DCM`) 来操作私有证书颁发机构并颁发私有证书. 此外，还可以使用 `DCM` 为公共 `Internet CA` 为颁发的证书生成 `DN` 信息和密钥对. 
+  每个 `CA` 都有一个策略来确定 `CA` 需要哪些识别信息来颁发证书. 像电子邮件地址这类需要的信息就很少, 其他的一些公共 `CA` 可能需要更多的信息, 并在颁发证书之前要严格地证明该识别信息.
   
   **为任一类型的证书提供的 DN 信息包括：**
   - Certificate owner's common name
@@ -297,12 +300,12 @@ $ bash openssl-toolkit.sh
 |EMAIL|Email Address|组织联系人，通常是证书管理员或 `IT` 部门的联系人 | |
 
 ## `CA`/`ca.crt`/单双向认证
-> 这一段是截取 [SSL-TLS 双向认证：SSL-TLS 工作原理](https://blog.csdn.net/espressif/article/details/78541410) 中的部分内容, 因为已经讲解的很清楚了, 就不再自己复述一遍了
+> 这一段是截取 [SSL-TLS 双向认证：SSL-TLS 工作原理](https://blog.csdn.net/espressif/article/details/78541410) 中的部分内容, 因为已经讲解的很清楚, 直接粘贴了
 
-  `CA` 全称为 `Certificate Authotiry`, 证书授权中心, 又被成为根证书. 它类似于工商管理局, 给公司企业颁发营业执照.
+  `CA` 全称为 `Certificate Authotiry`, 证书授权中心, 又被称为根证书. 它类似于工商管理局, 给公司企业颁发营业执照.
   `CA` 有两大主要特性：
-  - `CA` 本身是受国际认可, 受信任的
-  - `CA` 需要给它受信任的对象颁发证书
+  - `CA` 本身是受国际认可, 可以被信任的
+  - `CA` 需要给信任的对象颁发证书
   
   哪里可以查看证书:
   - `Chrome` 浏览器：设置 -> 高级 -> 管理证书 -> 授权中心
