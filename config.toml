@@ -200,26 +200,27 @@ uglyURLs = false
         pre = "internal"
         post = "tags"
         identifier = "tags"
-    [[menu.main]]
-        pageref = "/categories/"
-        name = "分类"
-        weight = 2
-        pre = "internal"
-        post = "th"
-    [[menu.main]]
-        url = "/life/"
-        name = "生活"
-        weight = 3
-        pre = "internal"
-        post = "grav"
-        identifier = "life"
+#    [[menu.main]]
+#        pageref = "/categories/"
+#        name = "分类"
+#        weight = 2
+#        pre = "internal"
+#        post = "th"
     [[menu.main]]
         url = "/tech/"
         name = "技术"
-        weight = 4
+        weight = 3
         pre = "internal"
         post = "wpexplorer"
         identifier = "tech"
+    [[menu.main]]
+        url = "/life/"
+        name = "随笔"
+        weight = 4
+        pre = "internal"
+        post = "grav"
+        identifier = "life"
+
     [[menu.main]]
         pageref = "/about/"
         name = "关于"
@@ -312,7 +313,7 @@ uglyURLs = false
     # 3. posts     文章摘要
     # 4. page      普通页面
 
-    homeLayout = "footage"
+    homeLayout = "poetry"
 
     ## Poetry
     # Verse (Markdown supported)
@@ -457,7 +458,7 @@ uglyURLs = false
     displayTaxonomyTermCount = true
 
     # 设置一个非负数来限制每一类别项下展示的文章数
-    limitEntriesLimit = -1
+    limitEntriesLimit = 3
 
 
     ######################################

@@ -2,8 +2,8 @@
 title = "Kubernetes学习笔记"
 description = "k8s学习笔记记录"
 draft = false
-date = "2022-03-13T22:04:30+08:00"
-lastmod = "2022-03-13T22:04:30+08:00"
+date = "2021-09-13T22:04:30+08:00"
+lastmod = "2021-09-13T22:04:30+08:00"
 tags = ["cloud", "docker", "云原生", "kubernetes"]
 dropCap = false
 displayCopyright = false
