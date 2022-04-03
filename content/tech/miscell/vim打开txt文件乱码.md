@@ -12,14 +12,14 @@ toc = true
 +++
 ## 背景
 使用 vim 打开 windows 上编辑的 txt 文件, 出现下面的乱码现象
-![vim显示乱码](https://raw.githubusercontent.com/liawne/blog_images/master/2022/03/20220320-1054.png)
+![vim显示乱码](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/04/20220403-2144.png)
 在 manjaro 的 kate 中打开, 可以正常显示
-![kate正常显示](https://raw.githubusercontent.com/liawne/blog_images/master/2022/03/20220320-1553.png)
+![kate正常显示](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/04/20220403-2145.png)
 
 ## 定位
 判断出 vim 编辑乱码的原因是因为 vim 的编码方式问题, 需要调整 vim 的相关配置
 
-对于 vim 的配置文件 ~/.vimrc 或者 /etc/vimrc, 如果不清楚配置文件各个配置项的具体作用, 则最好不要随意更改调整, 否则可能出现自己不清楚的错误, 后续想修复又不容易找到是什么原因导致的. 这个自己之前踩过坑, 网上抄写大牛发出来的配置, 确实能用, 但那是他们调教出来的效果, 不一定就是自己想要的; 想调整成最适合自己的, 还是要自己折腾.
+对于 vim 的配置文件 ~/.vimrc 或者 /etc/vimrc, 若不清楚配置项的具体作用, 最好不要调整. 建议自行测试配置内容的作用, 确定最合适自己的配置.
 
 /etc/vimrc 是全局配置, ~/.vimrc 是用户配置, 我们只需要调整~/.vimrc 即可
 

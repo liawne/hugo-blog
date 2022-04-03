@@ -15,7 +15,13 @@
         margin-top: 0.4em;
     }
     .home .poetry {
-        padding: 10em 1em;
+        font-size: 1.2em;
+        width: auto;
+        font-weight: bold;
+        font-family: 'Source Han Serif CN', serif;
+        max-width: 26em;
+        margin: 0 auto;
+        padding: 10em 1em 10em;
     }
     .menu-item {
         .tags, .tech, .life, .about {
@@ -38,7 +44,7 @@
             grid-template-columns: 1fr 1fr 1fr 1fr;
         }
         .menu-item {
-            .tags, .categories, .life, .tech, .cards, .series, .archives, .friends, .about {
+            .tags, .tech, .life, .about {
                 display: inline-block;
             }
         }

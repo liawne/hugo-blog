@@ -2,10 +2,11 @@
 title = "learning bash via abs"
 description = "通过advanced-bash-scripting学习bash的笔记内容"
 date = "2020-03-20T10:18:17+08:00"
-lastmod = "2022-03-20T10:18:17+08:00"
+lastmod = "2020-03-20T10:18:17+08:00"
 tags = ['bash', 'linux', '基础知识']
 dropCap = false
 displayCopyright = true
+displayExpiredTip = true
 gitinfo = false
 draft = false
 toc = true
