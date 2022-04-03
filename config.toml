@@ -285,6 +285,11 @@ uglyURLs = false
     #siteBrandFontColor = "var(--color-contrast-high)"
     siteBrandFontColor = "#302a75"
 
+    # 用来设置背景色（hsl 格式）
+    siteBrandBackgroundColor = "hsl(240, 8%, 12%)"
+    # 背景图片
+    #siteBrandBackgroundImage = "linear-gradient(90deg, #f79533 0, #f37055 15%, #ef4e7b 30%, #a166ab 44%, #5073b8 58%, #1098ad 72%, #07b39b 86%, #6dba82 100%)"
+
 
     ######################################
     # 菜单栏
@@ -317,7 +322,8 @@ uglyURLs = false
 
     ## Poetry
     # Verse (Markdown supported)
-    homePoetry = ["莫听穿林打叶声，", "何妨吟啸且徐行。", "竹杖芒鞋轻胜马，谁怕？", "一蓑烟雨任平生。", "","料峭春风吹酒醒，微冷，", "山头斜照却相迎。", "回首向来萧瑟处，归去，", "也无风雨也无晴。"]
+    #homePoetry = ["莫听穿林打叶声，", "何妨吟啸且徐行。", "竹杖芒鞋轻胜马，谁怕？", "一蓑烟雨任平生。", "","料峭春风吹酒醒，微冷，", "山头斜照却相迎。", "回首向来萧瑟处，归去，", "也无风雨也无晴。"]
+    homePoetry = ["过期食物，扔了就好;", "老了的书，不读也无碍。", "但有太多事，就这样搁着，可惜了。", " ", " ", "\"莫避春阴上马迟，春来未有不阴时。\""]
     # Padding of links at the bottom
     # Unit: em
     homeLinksPadding = 1
