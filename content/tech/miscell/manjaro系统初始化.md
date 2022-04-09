@@ -1,0 +1,408 @@
++++
+title = "Manjaro系统初始化"
+description = "manjaro 系统安装完成后的配置优化内容"
+date = "2022-04-09T14:47:28+08:00"
+lastmod = "2022-04-09T14:47:28+08:00"
+tags = ["manjaro", "linux", "系统安装"]
+dropCap = false
+displayCopyright = true
+displayExpiredTip = true
+gitinfo = false
+draft = false
+toc = true
++++
+
+## 基础配置内容
+### \# pacman 源地址修改
+  修改软件源，切换至国内，加快下载速度
+  ```
+  # 修改前备份
+  $ sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+
+  # 更新镜像源排名
+  $ sudo pacman-mirrors -i -c China -m rank
+  $ sudo cp /etc/pacman.conf /etc/pacman.conf.backup
+
+  # 添加ArchLinux中文社区源
+  $ sudo vi /etc/pacman.conf
+  [archlinuxcn]
+  SigLevel = Optional TrustedOnly
+  # 清华源
+  Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
+  # 中科大源
+  #Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
+
+  # 使配置生效
+  $ sudo pacman-mirrors -g
+
+  # 更新 pacman 数据库全面更新系统并签名
+  $ sudo pacman -Syyu && sudo pacman -S archlinuxcn-keyring
+
+  # 先安装一些包，后续其他需要配置的包单独说明
+  $ sudo pacman -S acpi vim yay
+  ```
+
+### \# 系统更新
+  使用 `iso` 镜像装完了系统，系统软件有些滞后，进行后续配置前，先更新一下系统软件
+  ```
+  # 更新软件包
+  $ sudo pacman -Syyu
+  ```
+
+### \# sudo 配置免密
+  后续的很多配置都需要在命令行下操作，且需要 `root` 权限，设置 `sudo` 不需要输入密码，避免配置时总提示输入用户密码
+  ```
+  # 切换到root用户
+  $ sudo -i
+  
+  # 只需要配置10-installer文件即可，查看配置后的内容
+  $ sudo cat /etc/sudoers.d/10-installer 
+  %wheel ALL=(ALL) NOPASSWD: ALL
+  ``` 
+
+### \# git 配置
+  安装 git
+  ```
+  $ sudo pacman -S git
+  ```
+  配置git
+  ```
+  # 用户名
+  $ git config --global user.name "<username>"
+  
+  # 邮箱
+  $ git config --global user.email "<mail-address>"
+  
+  # 提交时转换为 LF，检出时不转换
+  $ git config --global core.autocrlf false
+  $ git config --global core.safecrlf false
+  $ git config --global core.autocrlf input
+  
+  # 因为我的 trojan 代理 sock 端口是 1080
+  $ git config --global http.proxy socks5://127.0.0.1:7891
+  $ git config --global --add remote.origin.proxy ""
+  $ git config --global core.editor "vim"
+  ```
+  
+### \# 字体配置
+  自己使用的系统语言配置是英文的，日常使用需要一些中文字体
+  ```
+  # 安装中文字体
+  $ sudo pacman -S wqy-zenhei 
+  $ sudo pacman -S wqy-bitmapfont 
+  $ sudo pacman -S wqy-microhei 
+  $ sudo pacman -S ttf-wps-fonts 
+  $ sudo pacman -S adobe-source-han-sans-cn-fonts 
+  $ sudo pacman -S adobe-source-han-serif-cn-fonts
+  ```
+
+### \# 时间同步配置
+  系统时区在系统安装时已经选择了，默认选择 `Asia/Shanghai` 就可以
+  ```
+  # 若有调整需求，可以用下面命令调整，时区可以 tab tab 出来
+  $ timedatectl set-timezone Asia/Shanghai
+  ```
+  
+  自己的电脑是 `windows 11 + manjaro` 双系统，需要在 `windows` 下配置，让 `windows` 把硬件时间当作 `UTC`，避免双系统切换导致的时间错乱。
+  ```
+  # Win + R 进入 cmd，以管理员身份运行后在命令行中输入下面命令并回车
+  <admin># Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
+  ```
+  UTC：`Universal Time Coordinated`，协调世界时
+
+  GMT：`Greenwich Mean Time`，格林尼治平时
+  
+`windows` 与 `linux` 缺省看待系统硬件时间的方式是不一样的：
+  * windows 把系统硬件时间当作本地时间(local time)，即操作系统中显示的时间跟 `BIOS` 中显示的时间是一样的。
+  * linux/unix/mac 把硬件时间当作 UTC，操作系统中显示的时间是硬件时间经过换算得来的，比如说北京时间是GMT+8，则系统中显示时间是硬件时间+8。
+  
+  
+### \# 中文输入法配置
+  使用 `fcitx5`管理输入法
+  ```
+  # 安装 Fcitx5 主体、配置工具、输入法引擎及中文输入法模块
+  $ sudo pacman -S fcitx5-im fcitx5-chinese-addons fcitx5-qt fcitx5-gtk
+  
+  # 配置用户家目录下 pam 环境变量文件，（为了对齐，中间是一个 Tab 键）
+  $ cat ~/.pam_environment
+  GTK_IM_MODULE DEFAULT=fcitx
+  QT_IM_MODULE  DEFAULT=fcitx
+  XMODIFIERS    DEFAULT=\@im=fcitx
+  INPUT_METHOD  DEFAULT=fcitx
+  SDL_IM_MODULE DEFAULT=fcitx 
+  ```
+  注销后登陆，输入法显示出来了，进入云拼音和标点符号的配置
+  > 入口：system settings/regional settings/input method  
+  > 或者直接在系统托盘的键盘图标右键点击配置
+
+  ![配置输入法1](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/进入云拼音配置1)
+  ![配置输入法2](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022-04-06_07-28.png)
+  调整云拼音的后端，也即云端词库，选择 `Baidu` ，`google` 不一定用的了
+  ![云拼音配置](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022-04-06_07-28_1.png)
+  修改pinyin的切换候选词配置，默认是上下，需要调整配置到`,/.`。
+  ![候选词切换1](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022-04-09_11-43.png)
+  ![候选词切换2](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022-04-09_11-44.png)
+
+### \# 命令历史记录配置
+  终端上可能会同时开启几个 `tab`,如果在多个 `tab` 上都有执行命令的话，`.bash_history` 不一定能保留所有的命令历史记录，需要单独配置来记录所有 `tab` 上执行的命令
+  ```
+  # 在 /etc/profile 中添加如下内容
+  $ tail -2 /etc/profile
+  export HISTORY_FILE="/var/log/CMD_all.log"
+export PROMPT_COMMAND='{ thisHistID=`history 1|awk "{print \\$1}"`;lastCommand=`history 1| awk "{\\$1=\"\" ;print}"`;user=`id -un`;whoStr=(`who -u am i`);realUser=${whoStr[0]};logMonth=${whoStr[2]};logDay=${whoStr[3]};pid=${whoStr[5]};ip=${whoStr[6]};if [ ${thisHistID}x != ${lastHistID}x ];then echo -E `date "+%Y/%m/%d %H:%M:%S"` $user\($realUser\)@$ip[Pid:$pid][LoginTime:$logMonth $logDay] ExecuteCommand: $lastCommand;fi; } >> $HISTORY_FILE'
+
+  # 先生成日志文件，并修改其权限配置
+  $ sudo touch /var/log/CMD_all.log
+  $ sudo chmod 666 /var/log/CMD_all.log
+  
+  # 重新加载 /etc/profile 文件，使配置生效
+  $ source /etc/profile
+  
+  # 后续需要查找之前执行的命令，可以直接执行命令
+  $ cat /var/log/CMD_all.log | grep <item>
+  ```
+
+## 软件的安装配置
+### \# 安装配置 virtualbox
+  ```
+  # 获取当前内核版本
+  $ mhwd-kernel -li 
+  Currently running: 5.15.28-1-MANJARO (linux515)
+  The following kernels are installed in your system:
+   * linux515
+  
+  # 安装 virtualbox
+  $ sudo pacman -Syu virtualbox linux515-virtualbox-host-modules
+  
+  # 自己下载镜像，在 virtualbox 上安装系统，保存快照，以后就可以基于快照生成虚拟机
+  ```
+
+### \# 安装远程工具
+  日常工作在 `manjaro` 上，连接其他 `windows` 主机或 `linux` 主机，需要用到 `vnc` 和 `rdp` 工具
+  ```
+  # 安装 rdp 工具 remmina
+  $ sudo pacman -S remmina
+  
+  # 安装 vnc 工具
+  $ yay -S realvnc-vnc-viewer
+  ```
+
+### \# 安装下载工具
+  日常下载工具，`aria2c + uget` 
+  ```
+  $ sudo pacman -S aria2 uget
+  ```
+
+### \# 安装 chrome 浏览器
+  不是很习惯使用火狐，下载 `google-chrome`
+  ```
+  $ yay -S google-chrome
+  ```
+  安装 `switchomega-proxy` 插件，登陆 google 帐号，开启同步功能后，会自动将 chrome 的配置和书签同步过来。
+
+  登陆谷歌帐号需要翻墙，见下面翻墙配置内容
+
+### \# 安装配置 albert
+  `albert` 是一个快速加载工具，开启相应支持后，可以很方便的打开文件、软件、链接等各种内容，功能类似于 `windows` 上的 `everything`; 可以简省很多快捷键配置、减少找文件的时间
+  ```
+  # 安装 albert
+  $ yay -S albert-bin
+  ```
+  安装完成后，打开 `albert` 配置界面，设置快捷键、主题、开机自启、及开启各个插件支持，主题选择了`spotlight dark`
+  ![配置albert](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/20220409213927.png)
+
+### \# 开发 IDE
+  日常使用到的有 `vscode`，`pycharm`，直接安装就好
+  ```
+  $ yay -S pycharm-community-eap vscode
+  ```
+
+### \# 博客使用
+  日常写博客用的是 `hugo`，图床用的是阿里云`OSS`，图片上传到图床的工具用 `picgo`
+  ```
+  # 安装 hugo
+  $ sudo pacman -S hugo
+  
+  # 安装 picgo
+  $ yay -S picgo
+  ```
+
+### \# 安装 wps
+  `marjaro` 无法使用 `office`套装（可能也可以，自己没找到可用的方式），`libreoffice` 自己用的不习惯，选了 `wps` 做替代
+  ```
+  # 安装 wps, 建议英文界面下安装 wps-office, 安装 wps-office-zh 后使用过程中碰到过一些报错
+  $ yay -S wps-office
+  ```
+
+### \# 安装网易云音乐
+  日常听歌使用
+  ```
+  $ yay -S netease-cloud-music
+  ```
+
+## 易用性/界面优化
+**需要使用到的一些配置文件/工具，已经提前准备好，直接拷贝到机器上**。包括有：
+- 配置文件
+  - `.bashrc`：个人用户使用的 `bash` 配置文件，包括一些配置的别名、环境变量等
+  - `.vimrc`：个人用户使用的 `vim` 配置文件，包括缩进、语法高亮、插件、主题等
+  - `.tmux.conf`：`tmux` 的配置文件，`tmux` 的一些配置
+  - `shell_init.tar.gz`：自己使用的一些终端banner，可以不用管
+- 需要网上找，直接本地备份的一些文件
+  - `Trojan-Qt5-Linux.AppImage`：trojan-qt5，服务器延迟不稳定但能使用，不是很适合`clash`，还是用 `trojan`了
+  - `Proxy-SwitchyOmega-Chromium.crx`：`chrome` 的代理插件
+
+### \# yakuake/tmux/bash/vim 配置
+  `bash`/`vim` 配置很简单，直接将 `.bashrc` 和 `.vimrc` 文件拷贝到用户家目录下即可。
+  ```
+  # shell_init.tar.gz是自己使用的一些内容，就不放出来了
+  $ tar xf ./shell_init.tar.gz
+  $ mv .english* ~/
+  $ mv ./{.vimrc,.bashrc} ~/
+  ```
+
+  配置 `yakuake` 和 `tmux`
+  ```
+  # yakuake 在 manjaro 安装时已经自带，可以不用安装;
+  # 安装 tmux
+  $ sudo pacman -S tmux
+  ```
+  将自己备份的 `tmux.conf` 文件拷贝到用户家目录下，重命名为 `.tmux.conf`。拷贝 `tmux` 配置文件生效后，需要配置 `yakuake`, 因为 `tmux` 配置中 `Alt + <num> ` 的配置占用了yakuake的快捷键，不配置的话无法在 `yakuake` 中切换 `tab`。如下所示进行配置（`yakuake/config keyboard shortcuts`）：
+  ![配置快捷键](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022-04-09_11-48.png)
+  
+  顺带把 `yakuake` 主题和边框都调整好
+
+### \# 调整终端的配置（profile）
+  `manjaro` 安装完成后，终端默认的配置方案（profile）不是很喜欢，新增配置方案（最初默认的profile修改了不能保存），配置好后将其设置为默认的配置方案
+  - 新建 `profile`（`konsole/settings/manage profiles/new`）
+  ![新建profile1](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/picgo//home/liawne/.config/picgo/20220409215624.png)
+  ![新建profile2](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/20220409214802.png)
+  - 选择配置方案及字体
+  ![字体及配色](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/20220409215121.png)
+  - 鼠标选中复制
+  ![鼠标选中复制](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/20220409215254.png)
+
+### \# 配置翻墙
+  翻墙软件自己使用的是 `trojan-qt5` 的 `AppImage` 版本，这个可以在网上自行搜索下载。不想配置全局代理，还可以安装 `provixy`
+  ```
+  # 将下载的 appimage 文件放到 /tmp 下
+  $ mv Trojan-Qt5-Linux.AppImage /tmp
+  $ chmod +x /tmp/Trojan-Qt5-Linux.AppImage
+  
+  # 创建自定义的 AppImage 存储目录
+  $ mkdir ~/.Applications
+  
+  # 运行 AppImage 
+  $ /tmp/Trojan-Qt5-Linux.AppImage
+  
+  # 配置 trojan 开机自启，创建软链接
+  $ sudo ln -s /home/<username>/.Applications/Trojan-Qt5-Linux_cb059cf83989c64d7d13dd501bcd6b62.AppImage /usr/bin/trojan
+  
+  # 配置 trojan 开机自启，生成 autostart 文件
+  $ cat /home/<username>/.config/autostart/trojan.desktop
+  [Desktop Entry]
+  Exec=/usr/bin/trojan
+  Icon=dialog-scripts
+  Name=trojan
+  Path=
+  Type=Application
+  X-KDE-AutostartScript=true
+  ```
+  第一次执行 `AppImage` 时，会要求确认 `applications` 存放的位置，设置存储路径到`~/.Applications`。
+
+  导入gui-config.json文件，配置 `trojan`（`settings/General settings`）
+  - 常规设置
+  ![常规设置](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/flameshot//home/liawne/Pictures/flameshot/2022-04-07_07-15.png)
+  - 入站设置
+  ![入站设置](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/flameshot//home/liawne/Pictures/flameshot/2022-04-07_07-16.png)
+  - 出站设置
+  ![](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/flameshot//home/liawne/Pictures/flameshot/2022-04-07_07-16_1.png)
+  
+  配置完成后测试延迟，选择一个延迟较低的连接即可
+
+  配置 switchomega-proxy 为socks5 监听端口1080
+  ![switchomega配置](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/picgo//home/liawne/.config/picgo/20220409220852.png)
+
+  安装并配置privoxy,启动服务
+  ```
+  # 安装 privoxy
+  $ sudo pacman -S privoxy
+  
+  # 配置配置文件（只需要增加一行内容），trojan 监听的是1080端口
+  $ grep '^forward-socket' /etc/privoxy/config
+  forward-socks5t / 127.0.0.1:1080 .
+  
+  # 启动 privoxy，并设置开机自启
+  $ sudo systemctl start privoxy.service && sudo systemctl enable privoxy.service
+  ```
+
+  上述内容配置完成后，`chrome` 开启代理模式，然后登陆 `google` 帐号，各项配置、插件、书签会自动同步
+
+### \# 安装wudao-dict
+  `wudao-dict` 是一个命令行下查单词的工具，日常看文档、wiki的时候有不清楚的单词，可以很方便的查询
+  ```
+  $ cd ~/Downloads/linux
+  $ git clone https://github.com/chestnutheng/wudao-dict
+  $ cd ./wudao-dict/wudao-dict
+  $ sudo bash setup.sh
+  ```
+
+### \# 界面优化
+- 配置系统托盘，在上尖点击右键，进入项目可以配置
+
+- `unpin` 所有托盘图标
+
+### \# 安装 numix 主题相关
+  **numix 主题安装**
+
+  命令行下安装 `numix-folders` 相关内容，可以调整 `numix` 默认的棕红色
+  ```
+  $ sudo pacman -S python-dulwich
+  $ pamac build numix-icon-theme-git
+  $ pamac build numix-square-icon-theme-git
+  $ pamac build numix-circle-icon-theme-git
+  $ pamac build numix-folders-git
+  ```
+  安装numix，进入终端，开启代理后再打开系统设置，不然可能下载不了 `numix` 主题，下载界面会一直报错
+  ```
+  $ export http_proxy='http://127.0.0.1:8118'
+  
+  # 打开界面后，进入主题安装，搜索 numix 进行安装
+  $ /usr/bin/systemsetting   
+  ```
+  更改 `numix` 默认的文件夹颜色
+  ```
+  # 打开界面后，自行选择颜色
+  $ sudo numix-folders
+  ```
+  **splash screen配置**
+  
+  如下图，选择自己喜欢的安装即可
+  ![配置splash screen](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/04/20220409-2228.png)
+
+  **SDDM 配置**
+  
+  如下图，选择自己喜欢的安装即可
+  ![sddm配置](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/04/20220409-2235.png)
+
+### \# 语言设置
+  切换默认语言，可以自行设置
+  > 入口: `system settings/regional settings/languages`
+  
+  - 要从中文切换为英文，添加语言选择 `American English`
+  ![配置语言](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/04/20220409-2216.png)
+  - 调整语言顺序
+  ![调整顺序](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/04/20220409-2218.png)
+  - `logout` 再登陆，配置生效
+  
+
+### \# 快捷键配置
+  设置一些快捷键，方便日常使用
+  > 入口：`system settings/shortcuts/custom shortcuts/Edit/New/Global shortcuts/Commands URLs`
+  
+  ![配置快捷键](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/04/20220409-2220.png)
+  这边添加的有：`google-chrome`、`kate`、`virtualbox`、`dolphin`
+
+## 其他
+参考内容：
+- [Windows + Linux 双系统时间同步问题解决](https://www.cnblogs.com/bluestorm/p/12466830.html)
+- [manjaro linux 界面优化](https://tech.shmily-qjj.top/3f34ebe3/)
