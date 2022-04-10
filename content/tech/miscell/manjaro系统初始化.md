@@ -217,6 +217,73 @@ export PROMPT_COMMAND='{ thisHistID=`history 1|awk "{print \\$1}"`;lastCommand=`
   $ yay -S pycharm-community-eap vscode
   ```
 
+### \# 安装 pyenv
+  `pyenv` 可以在多个版本的 `python` 之间轻松切换，日常使用如果同时要用到 `python2` 和 `python3`，安装配置 `pyenv` 会很方便
+  ```
+  # 下载最新版的 pyenv 到家目录下
+  $ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+  
+  # 进入家目录，进行编译
+  $  cd ~/.pyenv && src/configure && make -C src
+  
+  # 添加相应的环境变量到 ～/.bashrc中
+  $ sed -Ei -e '/^([^#]|$)/ {a \
+    export PYENV_ROOT="$HOME/.pyenv"
+    a \
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    a \
+    ' -e ':a' -e '$!{n;ba};}' ~/.profile
+  $ echo 'eval "$(pyenv init --path)"' >>~/.profile
+  $ echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+  
+  # 下载 virtualenv 插件到 pyenv 的插件目录下
+  $ git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+  
+  # 添加环境变量到 ~/.bashrc 中
+  $ echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+  
+  # 重启 bash，加载 virtualenv
+  $ exec $SHELL
+  ```
+  使用 `pyenv` 管理多版本 `python` 时可能用到的一些特殊变量：
+  
+> Special environment variables  
+You can set certain environment variables to control pyenv-virtualenv.
+
+- **PYENV_VIRTUALENV_CACHE_PATH**, if set, specifies a directory to use for caching downloaded package files.
+
+- **VIRTUALENV_VERSION**, if set, forces pyenv-virtualenv to install the desired version of virtualenv. If virtualenv has not been installed, pyenv-virtualenv will try to install the given version of virtualenv.
+
+- **GET_PIP**, if set and venv is preferred over virtualenv, use get_pip.py from the specified location.
+
+- **GET_PIP_URL**, if set and venv is preferred over virtualenv, download get_pip.py from the specified URL.
+
+- **PIP_VERSION**, if set and venv is preferred over virtualenv, install the specified version of pip.
+
+- **PYENV_VIRTUALENV_VERBOSE_ACTIVATE**, if set, shows some verbose outputs on activation and deactivation
+
+  安装和配置 `virtualenv`
+  ```
+  # 安装指定版本的 python
+  $ pyenv install 2.7.15 -v
+  
+  # 在 指定的目录下，使用基于指定 python 版本的 virtualenv
+  # 如下，会在目录 my-virtual-env-2.7.10 下创建一个基于 $(pyenv root)/versions 中 2.7.10 版本 python 的 virtualenv
+  $ pyenv virtualenv 2.7.10 my-virtual-env-2.7.10 
+  
+  # 从指定版本创建 virtualenv
+  $ pyenv virtualenv 2.7.16 py27
+  
+  # 激活/释放 virtualenv
+  $ pyenv activate <name>
+  $ pyenv deactivate
+  
+  # 删除 virtualenv
+  $ pyenv uninstall my-virtual-env
+  $ pyenv virtualenv-delete my-virtual-env
+  ```
+
+
 ### \# 博客使用
   日常写博客用的是 `hugo`，图床用的是阿里云`OSS`，图片上传到图床的工具用 `picgo`
   ```
@@ -406,3 +473,5 @@ export PROMPT_COMMAND='{ thisHistID=`history 1|awk "{print \\$1}"`;lastCommand=`
 参考内容：
 - [Windows + Linux 双系统时间同步问题解决](https://www.cnblogs.com/bluestorm/p/12466830.html)
 - [manjaro linux 界面优化](https://tech.shmily-qjj.top/3f34ebe3/)
+- [pyenv安装](https://github.com/pyenv/pyenv#prerequisites)
+- [pyenv-virtualenv使用](https://github.com/pyenv/pyenv-virtualenv)
