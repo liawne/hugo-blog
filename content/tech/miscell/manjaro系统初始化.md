@@ -307,6 +307,19 @@ You can set certain environment variables to control pyenv-virtualenv.
   $ yay -S netease-cloud-music
   ```
 
+### \# 安装 xmind-2020
+  思维导图使用
+  ```
+  # xmind-2020 需要使用 snap 进行安装，manjaro 系统安装完成后已经有 snap 了; 若没有，则按以下方式进行配置
+  $ sudo pacman -S snapd
+  $ sudo systemctl enable --now snapd.socket
+  $ sudo ln -s /var/lib/snapd/snap /snap
+  
+  # 安装 xmind-2020
+  $ sudo snap install xmind
+  ```
+  `xmind-2020` 个人使用可以不用激活，感觉没有增强功能也足够使用了
+
 ## 易用性/界面优化
 **需要使用到的一些配置文件/工具，已经提前准备好，直接拷贝到机器上**。包括有：
 - 配置文件
@@ -450,6 +463,13 @@ You can set certain environment variables to control pyenv-virtualenv.
   
   如下图，选择自己喜欢的安装即可
   ![sddm配置](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/04/20220409-2235.png)
+
+  **Plasma style配置**
+
+  如下图，选择自己喜欢的进行安装
+  ![plasma配置](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/04/20220410-2309.png)
+
+  
 
 ### \# 语言设置
   切换默认语言，可以自行设置
