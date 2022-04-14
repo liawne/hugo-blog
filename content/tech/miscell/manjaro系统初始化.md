@@ -108,6 +108,11 @@ toc = true
   # Win + R 进入 cmd，以管理员身份运行后在命令行中输入下面命令并回车
   <admin># Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
   ```
+  在 `manjaro` 下设置硬件时间同步 `utc` 系统时间
+  ```
+  # 设置硬件时钟同步系统 utc 时间
+  $ sudo hwclock --systohc --utc
+  ```
   UTC：`Universal Time Coordinated`，协调世界时
 
   GMT：`Greenwich Mean Time`，格林尼治平时
@@ -292,6 +297,31 @@ You can set certain environment variables to control pyenv-virtualenv.
   
   # 安装 picgo
   $ yay -S picgo
+  ```
+  
+  markdown 文件中包含了中英文和数字，美观起见，互相之间应该加一个空格。除了在写的时候注意调整，还可以使用 `textlint` 来检查和修改，如下方式进行配置：
+  ``` 
+  # 安装 textlint
+  $ npm install textlint --global
+  $ npm install textlint-rule-ja-space-between-half-and-full-width --global
+  $ cd ~ && textlint --init
+  
+  # 配置 .textlintrc 配置文件
+  $ cat .textlintrc
+  {
+    "filters": {},
+    "rules": {
+        "ja-space-between-half-and-full-width": {
+            "space": "always"
+        }
+    }
+  }
+  
+  # 使用 textlint 检查
+  $ textlint *.md
+  
+  # 使用 textlint 修复
+  $ textlint --fix *.md
   ```
 
 ### \# 安装 wps
@@ -495,3 +525,5 @@ You can set certain environment variables to control pyenv-virtualenv.
 - [manjaro linux 界面优化](https://tech.shmily-qjj.top/3f34ebe3/)
 - [pyenv安装](https://github.com/pyenv/pyenv#prerequisites)
 - [pyenv-virtualenv使用](https://github.com/pyenv/pyenv-virtualenv)
+- [Get your time/timezone right using Manjaro/Windows dual-boot](https://forum.manjaro.org/t/root-tip-get-your-time-timezone-right-using-manjaro-windows-dual-boot/1167)
+- [Markdown 自动添加中英文空格](https://cloud.tencent.com/developer/article/1443927)

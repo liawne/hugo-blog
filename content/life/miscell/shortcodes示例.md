@@ -78,6 +78,15 @@ toc = true
 
 {{<notice info>}}This is info{{</notice>}}
 
+## music
+**插入音乐**，代码样式如下：
+``` 
+{{</* music id="569200212" type="song" server="netease" */>}}
+```
+{{< music id="569200215" type="song" server="netease" >}}
+
+{{<notice warning>}}会与 TOC 冲突，使用这个的时候不要开启 TOC {{</notice>}}
+
 ## shortcodes escape
 shortcodes 的形式写出来会被 Hugo 直接渲染，可以使用 /* */ 来防止被转义. 
 

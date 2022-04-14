@@ -26,11 +26,13 @@
     .menu-item {
         .tags, .tech, .life, .about {
             display: none;
+            font-weight: bold;
+            font-family: 'Source Han Serif CN', serif;
         }
     }
     .header-wrapper {
         padding: 1em 0;
-        //box-shadow: var(--color-contrast-low) 0 1px 0 0;
+        box-shadow: var(--color-contrast-low) 0 1px 0 0;
     }
     .nav-curtain {
         backdrop-filter: none;
