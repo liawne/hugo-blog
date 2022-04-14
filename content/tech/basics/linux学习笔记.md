@@ -8,7 +8,7 @@ dropCap = false
 displayCopyright = false
 displayExpiredTip = false
 gitinfo = false
-draft = falses
+draft = false
 toc = true
 +++
 
