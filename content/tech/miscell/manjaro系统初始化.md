@@ -13,11 +13,11 @@ toc = true
 +++
 ## 双系统安装配置
 ### \# 准备工作
-  当前准备安装 `manjaro` 的机器是联想小新pro, 已经装有正版 `windows11` 系统。考虑到平时也会有用到 `windows` 办公的场景，所以准备安装双系统，日常使用 `manjaro`，`manjaro` 无法满足的场景再使用 `windows`。  
+  当前准备安装 `manjaro` 的机器是联想小新pro, 已经装有正版 `windows 11` 系统。考虑到平时也会有用到 `windows` 办公的场景，所以准备安装双系统，日常使用 `manjaro`，`manjaro` 无法满足的场景再使用 `windows`。  
   - 刻录系统安装 `U`盘  
-    对操作内容比较简单，直接使用 dd 即可完成; 需要提前下载好 `manjaro` 系统安装 `iso` 文件
+    此操作比较简单，直接使用 `dd` 命令刻录即可; 需要提前下载好 `manjaro` 系统安装 `iso` 文件
     ```bash
-    # 镜像放在当前目录下，U 盘插入刻录 iso 文件的 linux 系统识别为 /dev/sdb; 如下命令操作
+    # 镜像放在当前目录下，U 盘插入刻录 iso 文件的 linux 系统，识别为 /dev/sdb; 如下命令操作
     $ sudo dd if=./manjaro-kde-21.1.4-210927-linux513.iso of=/dev/sdb status=progress
     ```
   - 设置 BIOS 中 `secure boot` 为 `disabled`  
@@ -25,21 +25,21 @@ toc = true
 
 ### \# windows 操作内容
   `windows` 默认把磁盘空间用完，需要在 `windows` 系统上调整分区大小，分出一块空间给 `manjaro` 使用
-   - 进入磁盘管理
+   - 进入磁盘管理  
     右键 `windows` 图标，选择磁盘管理
     ![磁盘管理](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/05/20220503-2336.png)
-   - 选择 D 盘进行缩容
+   - 选择 D 盘进行缩容  
     C 盘空间不建议缩容，对 D 盘做缩容操作
     ![d盘缩容](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/05/20220503-2337.png)
-   - 指定压缩卷空间大小即可
+   - 指定压缩卷空间大小即可  
     ![缩容1](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/05/20220503-2340.png)
-   - 缩容后显示
+   - 缩容后显示  
     ![缩容2](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/05/20220505-2236.png)
 
 ### \# manjaro 系统安装
   `manjaro` 安装后，需要保留 `windows` 的启动入口; `linux` 发行版安装系统时，默认会保留已有的 `windows` 启动入口; 反过来，先安装了 `linux` 发行版，再安装 `windows` 则不会保留 `linux` 的启动入口，需要自行修复。所以在给电脑安装双系统时，建议先装 `windows` 系统，再装 `linux` 系统。
    - 进入安装入口  
-    此处选择了`通过开源驱动`启动，下一项为`通过专有驱动`启动，建议有特殊硬件的设备选择这一项
+    此处选择了`通过开源驱动`启动，下一项为`通过专有驱动`启动，建议有特殊硬件的设备选择这一项  
     ![选择入口](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/05/20220505-2244.jpg)
 
    - 磁盘分区选择  
