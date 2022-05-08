@@ -548,12 +548,12 @@ You can set certain environment variables to control pyenv-virtualenv.
 
   **锁屏配置**
 
-  如下图，先安装 `wallpaper plugin` `flipclock`
+  如下图，先安装 `wallpaper plugin` `flipclock`  
   > 入口：桌面空白处右键/configure desktop and wallpaper/wallpaper type/get new plugins  
   ![flip插件安装](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/05/20220508-2352.png)
   
   如下图，配置锁屏界面
-  > 入口：system settings/workspace behavior/screen locking/apperance/configure/wallpaper type/flipclock
+  > 入口：system settings/workspace behavior/screen locking/apperance/configure/wallpaper type/flipclock  
   ![配置锁屏](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/05/20220508-2357.png)
 
 ### \# 语言设置
