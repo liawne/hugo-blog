@@ -378,6 +378,12 @@ You can set certain environment variables to control pyenv-virtualenv.
   $ yay -S netease-cloud-music
   ```
 
+### \# 安装街机模拟器 mame
+  街机游戏
+  ```
+  $ sudo pacman -S mame
+  ```
+
 ### \# 安装 xmind-2020
   思维导图使用
   ```
@@ -540,7 +546,15 @@ You can set certain environment variables to control pyenv-virtualenv.
   如下图，选择自己喜欢的进行安装
   ![plasma配置](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/04/20220410-2309.png)
 
+  **锁屏配置**
+
+  如下图，先安装 `wallpaper plugin` `flipclock`
+  > 入口：桌面空白处右键/configure desktop and wallpaper/wallpaper type/get new plugins  
+  ![flip插件安装](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/05/20220508-2352.png)
   
+  如下图，配置锁屏界面
+  > 入口：system settings/workspace behavior/screen locking/apperance/configure/wallpaper type/flipclock
+  ![配置锁屏](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/05/20220508-2357.png)
 
 ### \# 语言设置
   切换默认语言，可以自行设置
@@ -568,3 +582,5 @@ You can set certain environment variables to control pyenv-virtualenv.
 - [pyenv-virtualenv使用](https://github.com/pyenv/pyenv-virtualenv)
 - [Get your time/timezone right using Manjaro/Windows dual-boot](https://forum.manjaro.org/t/root-tip-get-your-time-timezone-right-using-manjaro-windows-dual-boot/1167)
 - [Markdown 自动添加中英文空格](https://cloud.tencent.com/developer/article/1443927)
+- [grub2-theme](https://github.com/vinceliuice/grub2-themes)
+- [Linux上安装街机模拟器](http://easior.is-programmer.com/posts/214926.html)
