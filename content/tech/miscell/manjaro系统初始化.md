@@ -239,6 +239,12 @@ export PROMPT_COMMAND='{ thisHistID=`history 1|awk "{print \\$1}"`;lastCommand=`
   $ sudo pacman -S aria2 uget
   ```
 
+### \# 安装笔记工具
+  日常笔记工具，`trilium-bin` 
+  ```
+  $ yay -S trilium-bin
+  ```
+
 ### \# 安装 chrome 浏览器
   不是很习惯使用火狐，下载 `google-chrome`
   ```
@@ -484,8 +490,9 @@ You can set certain environment variables to control pyenv-virtualenv.
   # 安装 privoxy
   $ sudo pacman -S privoxy
   
-  # 配置配置文件（只需要增加一行内容），trojan 监听的是1080端口
+  # 配置配置文件，trojan 监听的是1080端口，转发端口为 8118
   $ grep '^forward-socket' /etc/privoxy/config
+  listen-address  127.0.0.1:8118
   forward-socks5t / 127.0.0.1:1080 .
   
   # 启动 privoxy，并设置开机自启
