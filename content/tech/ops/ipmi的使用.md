@@ -200,23 +200,49 @@ NC-SI 支持将 `BMC(baseboard management controller)` 连接到服务器计算�
 ### 独享模式
 独享模式是默认模式，`BMC` 管理网单独使用一个网口，不和系统共用。
 
+## 其他
 ### python接口使用
+`ipmi` 的 `python` 库是 `python-ipmi`，具体内容可以参考：[python-ipmi](https://github.com/kontron/python-ipmi)  
+- 使用 `pip` 安装
+    ```bash
+    # pip 直接安装
+    $ pip install python-ipmi
+    ```
+- 接口调用示例
+  如下示例，使用 `ipmitool` 作为网络和串行接口的后端来设置接口和连接。
+    ```python
+    import pyipmi
+    import pyipmi.interfaces
     
-    安装
-        rpm包:python-ipmi
-        pip包:pyipmi
-    接口调用
+    # Supported interface_types for ipmitool are: 'lan' , 'lanplus', and 'serial-terminal'
+    interface = pyipmi.interfaces.create_interface('ipmitool', interface_type='lan')
+    
+    connection = pyipmi.create_connection(interface)
+    
+    connection.target = pyipmi.Target(0x82)
+    connection.target.set_routing([(0x81,0x20,0),(0x20,0x82,7)])
+    
+    connection.session.set_session_type_rmcp('10.0.0.1', port=623)
+    connection.session.set_auth_type_user('admin', 'admin')
+    connection.session.establish()
+    
+    connection.get_device_id()    
+    
+    # 对应的 ipmitool 命令： 
+    # ipmitool -I lan -H 10.0.0.1 -p 623 -U "admin" -P "admin" -t 0x82 -b 0 -l 0 raw 0x06 0x01
+    ```
 
 ### 服务器接线
-    
-    接在管理口,需要连接到千兆交换机
-    千兆网同时使用管理口,pxe同时使用这个口
-    千兆网只做管理口,万兆网作为PXE口
+  需要使用到 `PXE` 和 `ipmi` 的几种常见接线方式：
+  - 系统 `PXE` 使用服务器 `BMC` 管理口，`BMC` 是共享模式，`BMC` 和 `PXE` 流量都要走同一个千兆交换机口
+  - 系统 `PXE` 使用服务器千兆口，`BMC` 是独享模式，`BMC` 和 `PXE` 流量各走千兆交换机一个口
+  - 系统 `PXE` 使用服务器万兆口，`BMC` 是独享模式，万兆网作为 `PXE` 口
 
-## 其他
+### 参考链接
 参考内容：  
 [https://en.wikipedia.org/wiki/Intelligent_Platform_Management_Interface](https://en.wikipedia.org/wiki/Intelligent_Platform_Management_Interface)  
 [https://www.easyatm.com.tw/wiki/ipmitool](https://www.easyatm.com.tw/wiki/ipmitool)  
 [https://www.ibm.com/docs/en/power9/0000-FUL?topic=msbui-common-ipmi-commands-2](https://www.ibm.com/docs/en/power9/0000-FUL?topic=msbui-common-ipmi-commands-2)  
 [https://serverfault.com/questions/259792/how-does-ipmi-sideband-share-the-ethernet-port-with-the-host](https://serverfault.com/questions/259792/how-does-ipmi-sideband-share-the-ethernet-port-with-the-host)  
 [https://developer.aliyun.com/article/544871](https://developer.aliyun.com/article/544871)  
+[https://github.com/kontron/python-ipmi](https://github.com/kontron/python-ipmi)
