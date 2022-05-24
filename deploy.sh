@@ -3,6 +3,9 @@ set -e
 
 printf "\033[0;32mDeploying updates to GitHub...\033[0m\n"
 
+# delete old contents
+rm -rf public/*
+
 # Build the project.
 hugo --minify # if using a theme, replace with `Hugo -t <YOURTHEME>`
 
