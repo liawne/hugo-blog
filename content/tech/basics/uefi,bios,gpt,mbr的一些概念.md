@@ -5,8 +5,8 @@ date = "2022-05-25T23:03:13+08:00"
 lastmod = "2022-05-25T23:03:13+08:00"
 tags = ["uefi", "bios", "gpt", "mbr"]
 dropCap = false
-displayCopyright = false
-displayExpiredTip = false
+displayCopyright = true
+displayExpiredTip = true
 gitinfo = false
 draft = false
 toc = true
@@ -176,7 +176,7 @@ toc = true
 [https://www.partitionwizard.com/partitionmagic/uefi-vs-bios.html](https://www.partitionwizard.com/partitionmagic/uefi-vs-bios.html)
 [https://www.freecodecamp.org/news/mbr-vs-gpt-whats-the-difference-between-an-mbr-partition-and-a-gpt-partition-solved/](https://www.freecodecamp.org/news/mbr-vs-gpt-whats-the-difference-between-an-mbr-partition-and-a-gpt-partition-solved/)
 [https://www.maketecheasier.com/differences-between-uefi-and-bios/#:~:text=BIOS%20uses%20the%20Master%20Boot,physical%20partitions%20to%20only%204.](https://www.maketecheasier.com/differences-between-uefi-and-bios/#:~:text=BIOS%20uses%20the%20Master%20Boot,physical%20partitions%20to%20only%204.)
-·[https://en.wikipedia.org/wiki/Master_boot_record](https://en.wikipedia.org/wiki/Master_boot_record)
+[https://en.wikipedia.org/wiki/Master_boot_record](https://en.wikipedia.org/wiki/Master_boot_record)
 [https://www.partitionwizard.com/partitionmagic/uefi-vs-bios.html](https://www.partitionwizard.com/partitionmagic/uefi-vs-bios.html)
 [https://www.softwaretestinghelp.com/mbr-vs-gpt/](https://www.softwaretestinghelp.com/mbr-vs-gpt/)
 [https://www.alphr.com/mbr-vs-gpt/#:~:text=The%20main%20difference%20between%20MBR,boot%20off%20of%20GPT%20drives.](https://www.alphr.com/mbr-vs-gpt/#:~:text=The%20main%20difference%20between%20MBR,boot%20off%20of%20GPT%20drives.)
