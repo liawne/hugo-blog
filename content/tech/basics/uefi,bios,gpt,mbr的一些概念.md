@@ -172,11 +172,11 @@ toc = true
 - 安全启动`（secure boot）`是什么：是可执行文件的签名，如果签名与已在 `UEFI` 固件中注册的签名匹配，则主板将允许它启动; 否则不允许启动。
 
 ### \# 参考内容
-[https://fossbytes.com/uefi-bios-gpt-mbr-whats-difference/](https://fossbytes.com/uefi-bios-gpt-mbr-whats-difference/)
-[https://www.partitionwizard.com/partitionmagic/uefi-vs-bios.html](https://www.partitionwizard.com/partitionmagic/uefi-vs-bios.html)
-[https://www.freecodecamp.org/news/mbr-vs-gpt-whats-the-difference-between-an-mbr-partition-and-a-gpt-partition-solved/](https://www.freecodecamp.org/news/mbr-vs-gpt-whats-the-difference-between-an-mbr-partition-and-a-gpt-partition-solved/)
-[https://www.maketecheasier.com/differences-between-uefi-and-bios/#:~:text=BIOS%20uses%20the%20Master%20Boot,physical%20partitions%20to%20only%204.](https://www.maketecheasier.com/differences-between-uefi-and-bios/#:~:text=BIOS%20uses%20the%20Master%20Boot,physical%20partitions%20to%20only%204.)
-[https://en.wikipedia.org/wiki/Master_boot_record](https://en.wikipedia.org/wiki/Master_boot_record)
-[https://www.partitionwizard.com/partitionmagic/uefi-vs-bios.html](https://www.partitionwizard.com/partitionmagic/uefi-vs-bios.html)
-[https://www.softwaretestinghelp.com/mbr-vs-gpt/](https://www.softwaretestinghelp.com/mbr-vs-gpt/)
-[https://www.alphr.com/mbr-vs-gpt/#:~:text=The%20main%20difference%20between%20MBR,boot%20off%20of%20GPT%20drives.](https://www.alphr.com/mbr-vs-gpt/#:~:text=The%20main%20difference%20between%20MBR,boot%20off%20of%20GPT%20drives.)
+[https://fossbytes.com/uefi-bios-gpt-mbr-whats-difference/](https://fossbytes.com/uefi-bios-gpt-mbr-whats-difference/)  
+[https://www.partitionwizard.com/partitionmagic/uefi-vs-bios.html](https://www.partitionwizard.com/partitionmagic/uefi-vs-bios.html)  
+[https://www.freecodecamp.org/news/mbr-vs-gpt-whats-the-difference-between-an-mbr-partition-and-a-gpt-partition-solved/](https://www.freecodecamp.org/news/mbr-vs-gpt-whats-the-difference-between-an-mbr-partition-and-a-gpt-partition-solved/)  
+[https://www.maketecheasier.com/differences-between-uefi-and-bios/#:~:text=BIOS%20uses%20the%20Master%20Boot,physical%20partitions%20to%20only%204.](https://www.maketecheasier.com/differences-between-uefi-and-bios/#:~:text=BIOS%20uses%20the%20Master%20Boot,physical%20partitions%20to%20only%204.)  
+[https://en.wikipedia.org/wiki/Master_boot_record](https://en.wikipedia.org/wiki/Master_boot_record)  
+[https://www.partitionwizard.com/partitionmagic/uefi-vs-bios.html](https://www.partitionwizard.com/partitionmagic/uefi-vs-bios.html)  
+[https://www.softwaretestinghelp.com/mbr-vs-gpt/](https://www.softwaretestinghelp.com/mbr-vs-gpt/)  
+[https://www.alphr.com/mbr-vs-gpt/#:~:text=The%20main%20difference%20between%20MBR,boot%20off%20of%20GPT%20drives.](https://www.alphr.com/mbr-vs-gpt/#:~:text=The%20main%20difference%20between%20MBR,boot%20off%20of%20GPT%20drives.)  
