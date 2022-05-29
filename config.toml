@@ -2,7 +2,7 @@
 # 站点配置
 
 baseURL = "https://ruisum.top/"
-title = "NEWIUR"
+title = "newiur"
 languageCode = "zh-CN"
 hasCJKLanguage = true
 # 版权信息（支持 Markdown）
@@ -285,8 +285,8 @@ uglyURLs = false
     # 以文字的形式显示，下方可配置字号和字色。字
     # 体请到底部的字体部分配置。单位：em。
     siteBrandFontSize = 1.5
-    #siteBrandFontColor = "var(--color-contrast-high)"
-    siteBrandFontColor = "#302a75"
+    siteBrandFontColor = "var(--color-contrast-high)"
+    #siteBrandFontColor = "#292421"
 
     # 用来设置背景色（hsl 格式）
     siteBrandBackgroundColor = "hsl(240, 8%, 12%)"
