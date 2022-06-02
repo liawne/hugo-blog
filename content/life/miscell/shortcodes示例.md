@@ -3,11 +3,11 @@ title = "Shortcodes示例"
 description = ""
 date = "2022-04-03T13:48:19+08:00"
 lastmod = "2022-04-03T13:48:19+08:00"
-tags = [""]
+tags = ["shortcode", "blog"]
 dropCap = false
 displayCopyright = false
 gitinfo = false
-draft = true
+draft = false
 toc = true
 +++
 
