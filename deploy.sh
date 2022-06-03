@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-
+GIT_CURL_VERBOSE=1
 printf "\033[0;32mDeploying updates to GitHub...\033[0m\n"
 
 # delete old contents
