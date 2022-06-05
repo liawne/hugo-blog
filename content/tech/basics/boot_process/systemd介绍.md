@@ -9,7 +9,7 @@ displayCopyright = false
 displayExpiredTip = false
 gitinfo = false
 draft = false
-toc = false
+toc = true
 +++
 
 ## \# 说明
@@ -53,16 +53,17 @@ toc = false
 systemd 的核心组件包括：
 - `systemd` 是 `linux` 操作系统的系统和服务管理器。
 - `systemctl` 是一个自省和控制 `systemd` 系统和服务管理器状态的命令(不要与 sysctl 混淆)。
-- `systemd-analyze` 可用于确定系统启动性能统计数据，并从系统和服务管理器检索其他状态和跟踪信息。
+- `systemd-analyze` 可用于确定系统启动性能统计数据，并从系统和服务管理器检索其他状态和跟踪信息。  
+
 `systemd` 使用 `linux` 内核的 `cgroups` 子系统而不是使用`进程标识符 (PID)` 来跟踪进程；因此，守护进程无法逃离 `systemd`，即使是通过 `double-forking` 也不行。  
 `systemd` 不仅使用 `cgroup`，还使用 `systemd-nspawn` 和 `machinectl` 来扩充它们，这两个实用程序有助于创建和管理 `linux` 容器。  
-从`版本 205` 开始，`systemd` 还提供 `ControlGroupInterface`，它是 `linux` 内核 `cgroups` 的 `API`。`linux` 内核 `linux` 适用于支持 `kernfs`，并且正在被修改以支持统一的层次结构。
+从`版本 205` 开始，`systemd` 还提供 `ControlGroupInterface`，它是 `linux` 内核 `cgroups` 的 `API`。`linux` 内核 `linux` 适用于支持 `kernfs`，并且正在被修改以支持统一的层次结构。  
 
 **统一层次的 `cgroup` 将由 `systemd` 通过 `systemd-nspawn` 独占访问**  
 ![systemd-nspawn](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/06/20220605-1627.png)
 
 ### \# 辅助组件
-除了提供 `linux` 初始化系统的主要目的之外，`systemd` 套件还可以提供其他功能，包括以下组件：
+除了提供 `linux` 初始化系统的主要目的之外，`systemd` 套件还可以提供其他功能，包括以下组件：  
 **journald**  
 `systemd-journald` 是一个负责事件记录的守护进程，使用 `append-only` 的二进制文件作为其日志文件。系统管理员可以选择是否使用 `systemd-journald`、`syslog-ng` 或 `rsyslog` 记录系统事件。  
 **libudev**  
