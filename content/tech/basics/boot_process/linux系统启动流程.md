@@ -52,7 +52,7 @@ GPT 分区表磁盘：
 **什么是 GRUB2**  
 `GRUB2` 代表 `GRand Unified Bootloader version 2`，它是当前大多数 `Linux` 发行版的主要引导加载程序
 
-{{<notice info>}}grub2介绍请查看：[grub2介绍](https://www.ruisum.top/tech/basics/grub2%E4%BB%8B%E7%BB%8D/){{</notice>}}
+{{<notice info>}}grub2介绍请查看：[grub2介绍](https://www.ruisum.top/tech/basics/boot_process/grub2%E4%BB%8B%E7%BB%8D/){{</notice>}}
 
 ### BIOS 下 GRUB 流程
 任一 `GRUB` 的主要功能是将 `linux` 内核加载到内存中并运行。两个 `GRUB（grub 和 grub2）` 版本的工作方式基本相同，并且具有相同的三个阶段。 虽然官方并没有使用三个阶段来说明 `GRUB` 的工作流程，但是这样理解会比较方便。
@@ -114,7 +114,7 @@ GPT 分区表磁盘：
 
 下面的图 1 直接从 [bootup man page](http://man7.org/linux/man-pages/man7/bootup.7.html) 复制而来。它显示了 `systemd` 启动期间事件的一般顺序以及确保成功启动的基本排序要求。
 
-{{<notice info>}}systemd 介绍请查看：[systemd介绍](https://www.ruisum.top/tech/basics/systemd%E4%BB%8B%E7%BB%8D){{</notice>}}
+{{<notice info>}}systemd 介绍请查看：[systemd介绍](https://www.ruisum.top/tech/basics/boot_process/systemd%E4%BB%8B%E7%BB%8D/){{</notice>}}
 
 `sysinit.target` 和 `basic.target` `target` 可以被视为启动过程中的检查点。尽管 `systemd` 将并行启动系统服务作为其设计目标之一，但在启动其他`services 和 targets`之前，仍然必须启动某些`service`和功能`target`。在满足该检查点所需的所有`services 和 targets`之前，无法通过这些检查点。
 
