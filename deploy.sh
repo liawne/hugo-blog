@@ -23,7 +23,13 @@ fi
 
 git commit -m "$msg"
 
-git pull --rebase origin master || exit 1
+git remote -v 
+
+git pull --rebase origin master
+#if ! timeout 5 9 git pull --rebase origin master; then
+#  git remote rm origin
+#  git remote add origin git@github.com:liawne/liawne.github.io.git
+#fi
 
 # Push source and build repos.
 git push -f origin master || exit 1
