@@ -189,6 +189,9 @@ GPT 分区表磁盘：
 如下展示了分布在硬盘扇区上的 `GNU GRUB` 的各种组件。当 `GRUB` 安装在硬盘上时，`boot.img` 会被写入该硬盘的引导扇区。 `boot.img` 的大小只有 `446` 字节。
 ![boot sector构成](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/06/20220603-1529.png)
 
+### \# 网络引导的实现
+need.todo
+
 ### \# 参考内容
 本文参考文章列表如下：
 - [Working with GRUB 2](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-working_with_the_grub_2_boot_loader)

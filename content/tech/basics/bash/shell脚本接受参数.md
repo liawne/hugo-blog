@@ -1,8 +1,8 @@
 +++
-title = "Flock的使用"
+title = "Shell脚本接受参数"
 description = ""
-date = "2022-06-15T22:53:59+08:00"
-lastmod = "2022-06-15T22:53:59+08:00"
+date = "2022-06-16T22:45:44+08:00"
+lastmod = "2022-06-16T22:45:44+08:00"
 tags = [""]
 dropCap = false
 displayCopyright = false
