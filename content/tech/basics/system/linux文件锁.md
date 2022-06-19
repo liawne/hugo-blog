@@ -1,6 +1,6 @@
 +++
 title = "linux 文件锁"
-description = "linux系统中的锁机制"
+description = "linux系统中的锁机制，以及flock命令和flock系统调用的说明"
 date = "2022-06-15T22:53:59+08:00"
 lastmod = "2022-06-15T22:53:59+08:00"
 tags = ["linux", "lock", "flock"]
@@ -8,7 +8,7 @@ dropCap = false
 displayCopyright = false
 displayExpiredTip = false
 gitinfo = false
-draft = true
+draft = false
 toc = true
 +++
 ## \# 说明
@@ -201,7 +201,7 @@ flock --verbose balance.dat ./update_balance.sh '80'
 当进程 B 尝试获取 `balance.dat` 文件上的锁时，它等待进程 A 释放锁。因此，协同锁定起作用了，我们在数据文件中得到了预期的结果 260。
 
 ## \# flock 命令的使用
-**flock的语法**  
+### \# flock 的语法
 ```bash
 ## 命令格式
 flock [options] file|directory command [arguments]
@@ -221,36 +221,110 @@ flock [options] number
 上面的第一种和第二种形式类似于 `su` 或 `newgrp` 的命令格式。他们锁定一个指定的文件或目录，如果尚不存在，则会创建（需要有适当的权限）。默认情况下，如果锁不能立即获得，`flock` 会一直等待，直到锁可用为止。  
 第三种形式通过文件描述符号使用打开的文件，后面有示例说明。  
 
-**常见使用方式**  
+### \# 常见使用方式
 ```bash
 ## 执行 echo 命令前，获取排他锁
 $ flock -x local-lock-file echo 'a b c'
 
-## shell 脚本中使用很方便
-$ (
+## shell 脚本中使用很方便，当块中的代码执行完成时，文件描述符9和锁会自动释放
+## 此处还可以使用 subshell, 但subshell存在一定的性能损耗，以及一些其他类似变量传递等的问题
+$ {
  flock -n 9 || exit 1
  # ... commands executed under lock ...
-) 9>/var/lock/mylockfile
+} 9>/var/lock/mylockfile
   
 ## 这是 shell 脚本的样板代码。将它放在要锁定的 shell 脚本的顶部，它会在第一次运行时自动锁定。
 ## 如果 env var $FLOCKER 未设置为正在运行的 shell 脚本，则在重新执行自身之前执行 flock 并获取独占非阻塞锁（使用脚本本身作为锁文件）。 
 ## 它还将 FLOCKER 环境变量设置为正确的值，因此它不会再次运行。
 $ [ "${FLOCKER}" != "$0" ] && exec env FLOCKER="$0" flock -en "$0" "$0" "$@" || :
 ```
-**flock和fd的结合使用**
+
+### \# flock 和 fd 的结合使用
+- 为什么将 `flock` 与文件描述符结合使用
+  > 与更传统的锁定机制相比，使用`flock() `或与之密切相关的`fcntl(LOCK_EX)` 机制的主要优势之一是，无需在重新启动或其他非正常关机情况下执行清理动作。因为锁是通过文件描述符附加的；当该文件描述符关闭时（无论是通过正常关闭、SIGKILL 还是断电），不再持有锁。
+- 使用举例1
+  ```bash
+  ## 特定版本之后的 bash，支持不用手动管理 fd 的分配
+  # this requires a very new bash -- 4.2 or so.
+  exec {lock_fd}>filename  # open filename, store FD number in lock_fd
+  flock -x "$lock_fd"      # pass that FD number to flock
+  exec $lock_fd>&-         # later: release the lock
+  ```
+- 使用举例2
+  ```bash
+  ## 配置一个函数，用于获取锁
+  declare -A lock_fds=()                        # store FDs in an associative array
+  getLock() {
+    local file=$(readlink -f "$1")              # declare locals; canonicalize name
+    local op=$2
+    case $op in
+      LOCK_UN)
+        [[ ${lock_fds[$file]} ]] || return      # if not locked, do nothing
+        exec ${lock_fds[$file]}>&-              # close the FD, releasing the lock
+        unset lock_fds[$file]                   # ...and clear the map entry.
+        ;;
+      LOCK_EX)
+        [[ ${lock_fds[$file]} ]] && return      # if already locked, do nothing
+        local new_lock_fd                       # don't leak this variable
+        exec {new_lock_fd}>"$file"              # open the file...
+        flock -x "$new_lock_fd"                 # ...lock the fd...
+        lock_fds[$file]=$new_lock_fd            # ...and store the locked FD.
+        ;;
+    esac
+  }
+  ```
+
+## \# flock() 系统调用
+`flock()` - 在打开的文件上应用或删除协同锁
+
+### \# 实现
+```C
+#include <sys/file.h> 
+
+int flock(int fd, int operation); 
+```
+
+### \# 描述
+对 `fd` 指定的打开文件应用或删除协同锁，参数 `operation` 是以下之一：
+| **Tag** | **Description** |
+|:--- | :--- |
+|`LOCK_SH` | `Place a shared lock. More than one process may hold a shared lock for a given file at a given time.`|
+|`LOCK_EX` | `Place an exclusive lock. Only one process may hold an exclusive lock for a given file at a given time.`|
+|`LOCK_UN` | `Remove an existing lock held by this process.`|  
+
+- 如果另一个进程持有不兼容的锁，则调用 `flock()` 可能会阻塞。要发出非阻塞请求，在上述任何操作中包含 `LOCK_NB（通过 ORing）`。  
+- 单个文件一般不会同时拥有共享锁和排他锁。  
+- 由 `flock()` 创建的锁与`打开的文件表条目相（open file table entry）`关联。这意味着重复的文件描述符（例如，由 `fork(2)` 或 `dup(2)` 创建）引用同一个锁，并且可以使用这些描述符中的任何一个来修改或释放该锁。此外，通过对这些重复描述符中的任何一个执行显式 `LOCK_UN` 操作或在所有此类描述符已关闭时释放锁。  
+- 如果一个进程使用 `open(2)` （或类似方法）为同一个文件获取多个描述符，这些描述符将由 `flock()` 独立处理。  
+- 一个进程只能在文件上持有一种类型的锁（共享或独占）。对已锁定文件的后续 `flock()` 调用会将现有锁定转换为新锁定模式。  
+- 由 `flock()` 创建的锁在 `execve(2)` 中被保留。
+- 无论打开文件的模式如何，都可以在文件上放置共享锁或排他锁。  
+
+### \# 返回值和错误
+成功时，返回零;出错时，返回 -1，并适当设置 errno。  
+错误内容如下：  
+| **Error Code** | **Description** |
+|:--- | :--- |
+|`EBADF` | `d is not a not an open file descriptor.`|
+|`EINTR` | `While waiting to acquire a lock, the call was interrupted by delivery of a signal caught by a handler.`|
+|`EINVAL` | `operation is invalid.`|  
+|`ENOLCK` | `The kernel ran out of memory for allocating lock records.`|  
+|`EWOULDBLOCK` | `The file is locked and the LOCK_NB flag was selected.`|  
+
+### \# 其他
+- `flock(2)` 不会通过 `NFS` 锁定文件。请改用 `fcntl(2)`：它可以在 `NFS` 上运行。
+- 从内核 `2.0` 开始，`flock(2)` 本身作为系统调用实现，而不是在 `GNU C` 库中模拟为对 `fcntl(2)` 的调用。`flock(2)` 和 `fcntl(2)` 放置的锁类型之间没有交互，`flock(2)` 不会检测到死锁。
+- `flock(2)` 仅设置协同锁；给文件适当的权限，进程可以忽略 `flock(2)` 的使用并对文件正常执行`I/O`操作。
+- 对于 `forked进程` 和 `dup(2)`，`flock(2)` 和 `fcntl(2)` 锁具有不同的语义。在使用 `fcntl()` 实现 `flock()` 的系统上，`flock()` 的语义与本文`描述`部分不同。
+- 转换锁（共享到独占，反之亦然）不能保证是原子的：先移除现有锁，然后建立新锁。在这两个步骤之间，可能会授予另一个进程的挂起锁请求，如果指定了 `LOCK_NB`，则转换要么阻塞，要么失败。
 
 ## \# 其他
 ### \# 参考内容
 本文内容参考自：
-- [Introduction to File Locking in Linux](https://www.baeldung.com/linux/file-locking#:~:text=Introduction%20to%20flock%20Command,or%20on%20the%20command%20line.)
-- [flock常见使用示例](https://manpages.ubuntu.com/manpages/xenial/man1/flock.1.html)
-- [flock和文件描述符结合使用](https://stackoverflow.com/questions/24388009/linux-flock-how-to-just-lock-a-file)
-- [linux文件系统中的“锁”](https://zhuanlan.zhihu.com/p/399115173)
-- [Lock your script (against parallel execution)](https://wiki.bash-hackers.org/howto/mutex)
-- [Everything you never wanted to know about file locking](https://apenwarr.ca/log/20101213)
+- [Introduction to File Locking in Linux](https://www.baeldung.com/linux/file-locking#:~:text=Introduction%20to%20flock%20Command,or%20on%20the%20command%20line.)  
+- [flock常见使用示例](https://manpages.ubuntu.com/manpages/xenial/man1/flock.1.html)  
+- [flock和文件描述符结合使用](https://stackoverflow.com/questions/24388009/linux-flock-how-to-just-lock-a-file)  
+- [Lock your script (against parallel execution)](https://wiki.bash-hackers.org/howto/mutex)  
+- [Everything you never wanted to know about file locking](https://apenwarr.ca/log/20101213)  
 - [wikipedia file locking](https://en.wikipedia.org/wiki/File_locking)  
-https://stackoverflow.com/questions/22486651/why-does-flock-use-a-descriptor-or-file?noredirect=1&lq=1
-https://stackoverflow.com/questions/66380930/how-to-acquire-a-lock-file-in-linux-bash?noredirect=1&lq=1
-http://www.tutorialspoint.com/unix_system_calls/flock.htm
-https://stackoverflow.com/questions/56512379/how-to-use-flock-on-linux?noredirect=1&lq=1
-https://kernel.org/doc/Documentation/filesystems/mandatory-locking.txt
+- [flock() - Unix, Linux System Call](http://www.tutorialspoint.com/unix_system_calls/flock.htm)  
