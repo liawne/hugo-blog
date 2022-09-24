@@ -263,6 +263,16 @@ export PROMPT_COMMAND='{ thisHistID=`history 1|awk "{print \\$1}"`;lastCommand=`
   安装完成后，打开 `albert` 配置界面，设置快捷键、主题、开机自启、及开启各个插件支持，主题选择了`spotlight dark`
   ![配置albert](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/20220409213927.png)
 
+  **albert 可能出现的问题**  
+```
+## 场景一、快捷键调用一次后失效，albert 无法再次触发，日志中有报错内容  
+[fatal:default] SQL ERROR: INSERT INTO execution (query_id, handler_id, runtime) VALUES (:query_id, :handler_id, :runti
+me); UNIQUE constraint failed: execution.query_id, execution.handler_id Unable to fetch row  --  [(null)]
+
+# 修复动作
+$ rm ~/.config/albert/core.db 
+```
+
 ### \# 开发 IDE
   日常使用到的有 `vscode`，`pycharm`，直接安装就好
   ```
@@ -445,6 +455,7 @@ You can set certain environment variables to control pyenv-virtualenv.
   ![鼠标选中复制](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/20220409215254.png)
 
 ### \# 配置翻墙
+  **使用 trojan**  
   翻墙软件自己使用的是 `trojan-qt5` 的 `AppImage` 版本，这个可以在网上自行搜索下载。不想配置全局代理，还可以安装 `provixy`
   ```
   # 将下载的 appimage 文件放到 /tmp 下
@@ -481,6 +492,13 @@ You can set certain environment variables to control pyenv-virtualenv.
   ![](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/flameshot//home/liawne/Pictures/flameshot/2022-04-07_07-16_1.png)
   
   配置完成后测试延迟，选择一个延迟较低的连接即可
+
+  **使用 clash-for-windows**
+  ```
+  ## 直接安装
+  $ yay -S clash-for-windows-chinese
+  ```
+  安装完成后，直接界面配置，需要下载 clash 配置/url，加载成功后，选择一个延迟较低的连接即可。
 
   配置 switchomega-proxy 为socks5 监听端口1080
   ![switchomega配置](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/picgo//home/liawne/.config/picgo/20220409220852.png)
