@@ -213,13 +213,13 @@ uglyURLs = false
         pre = "internal"
         post = "wpexplorer"
         identifier = "tech"
-    [[menu.main]]
-        url = "/life/"
-        name = "随笔"
-        weight = 4
-        pre = "internal"
-        post = "grav"
-        identifier = "life"
+#    [[menu.main]]
+#        url = "/life/"
+#        name = "随笔"
+#        weight = 4
+#        pre = "internal"
+#        post = "grav"
+#        identifier = "life"
 
     [[menu.main]]
         pageref = "/about/"
@@ -326,7 +326,8 @@ uglyURLs = false
     ## Poetry
     # Verse (Markdown supported)
     #homePoetry = ["莫听穿林打叶声，", "何妨吟啸且徐行。", "竹杖芒鞋轻胜马，谁怕？", "一蓑烟雨任平生。", "","料峭春风吹酒醒，微冷，", "山头斜照却相迎。", "回首向来萧瑟处，归去，", "也无风雨也无晴。"]
-    homePoetry = ["过期食物，扔了就好;", "老了的书，不读也无碍。", "但有太多事，就这样搁着，可惜了。", " ", " ", "\"莫避春阴上马迟，春来未有不阴时。\""]
+    #homePoetry = ["过期食物，扔了就好;", "老了的书，不读也无碍。", "但有太多事，就这样搁着，可惜了。", " ", " ", "\"莫避春阴上马迟，春来未有不阴时。\""]
+    homePoetry = ["春未老，风细柳斜斜。试上超然台上看，", "半壕春水一城花。烟雨暗千家。", "寒食后，酒醒却咨嗟。休对故人思故国，", "且将新火试新茶。诗酒趁年华。"]
     # Padding of links at the bottom
     # Unit: em
     homeLinksPadding = 1
@@ -610,7 +611,7 @@ uglyURLs = false
     # 说明：仅在生产环境（production）下渲染
 
     # 是否开启（全局设置）
-    enableComments = true
+    enableComments = false
     # 说明：文章的 Front Matter 中的 `comments`
     #      的优先级高于此处
 
