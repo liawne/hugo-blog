@@ -239,12 +239,6 @@ export PROMPT_COMMAND='{ thisHistID=`history 1|awk "{print \\$1}"`;lastCommand=`
   $ sudo pacman -S aria2 uget
   ```
 
-### \# 安装笔记工具
-  日常笔记工具，`trilium-bin` 
-  ```
-  $ yay -S trilium-bin
-  ```
-
 ### \# 安装 chrome 浏览器
   不是很习惯使用火狐，下载 `google-chrome`
   ```
@@ -386,6 +380,65 @@ You can set certain environment variables to control pyenv-virtualenv.
   ```
   # 安装 wps, 建议英文界面下安装 wps-office, 安装 wps-office-zh 后使用过程中碰到过一些报错
   $ yay -S wps-office
+  ```
+
+### \# 安装笔记工具
+  日常笔记工具，`obsidian` 
+  ```
+  $ yay -S obsidian
+  ```
+  安装完成后，继续安装第三方插件时，可能提示无法连接网络，需要离线下载好 [obsidian-proxy-github](https://github.com/juqkai/obsidian-proxy-github) 插件进行安装：
+  - 解压下载好的 `obsidian-proxy-github.zip`
+  - 将解压的文件夹放入笔记目录下的插件目录内。如：`XXX/.obsidian/plugins`
+  - 重启 `obsidian`
+
+### \# 离线剪藏文件配置
+  **dropbox**  
+  安装 `dropbox`， 将保存在本地的剪藏目录作为同步目录（首选项中配置）
+  ```
+  # 直接安装
+  $ yay -S dropbox
+  ```
+  安装完成后，因为需要翻墙访问，须自行配置  
+  ![](https://ruisum.oss-cn-shenzhen.aliyuncs.com/img/2022/12/20221203-1446.png)
+
+  **singlefile**  
+  `chrome` 或者 `firefox` 上插件，直接安装即可  
+  安装后在选项中调整了保存文件名称，使用日期开头，方便整理归档
+  
+  **开机自启服务**  
+  `singlefile` 默认的的文件保存位置为 `chrome` 的文件下载位置，没找到调整的方式  
+  当前采用 `inotifywait` 监听目录文件变化，触发文件移动的方式来实现下载后，将文件移动至 `dropbox` 归档目录
+  ```bash
+  ## 安装 inotify-tools 工具
+  $ sudo pacman -S inotify-tools
+  
+  ## 开机自启服务内容
+  $ systemctl cat inotify.service 
+  # /usr/lib/systemd/system/inotify.service
+  [Unit]
+  Description=for /home/xxxxx/Downloads monitor
+  DefaultDependencies=no
+  Documentation=man:inotifywait(1)
+  StartLimitIntervalSec=0
+  After=network.target
+  
+  [Service]
+  Type=forking
+  ExecStart=/usr/bin/monitor-xxxxx-downloads.sh
+  
+  ## 脚本内容
+  $ cat /usr/bin/monitor-xxxxx-downloads.sh
+  #!/bin/bash
+  targetDir='/home/xxxxx/Downloads'
+  destDir='/home/xxxxx/lifematter/Dropbox/websnaps'
+  
+  (inotifywait -m $targetDir | while read a b file; do
+    if [[ $b == *CREATE* ]] && [[ ! -z $(find $targetDir -name '202*htm*' -maxdepth 1) ]]; then
+      find $targetDir -name '202*htm*' -maxdepth 1 -exec mv {} $destDir \;
+      chown liawne:liawne $destDir/$file || :
+    fi
+  done) &
   ```
 
 ### \# 安装网易云音乐
@@ -609,3 +662,4 @@ You can set certain environment variables to control pyenv-virtualenv.
 - [Markdown 自动添加中英文空格](https://cloud.tencent.com/developer/article/1443927)
 - [grub2-theme](https://github.com/vinceliuice/grub2-themes)
 - [Linux上安装街机模拟器](http://easior.is-programmer.com/posts/214926.html)
+- [Executing a bash script upon file creation](https://stackoverflow.com/questions/14692353/executing-a-bash-script-upon-file-creation)
