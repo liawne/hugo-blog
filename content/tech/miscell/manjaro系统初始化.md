@@ -436,7 +436,7 @@ You can set certain environment variables to control pyenv-virtualenv.
   (inotifywait -m $targetDir | while read a b file; do
     if [[ $b == *CREATE* ]] && [[ ! -z $(find $targetDir -name '202*htm*' -maxdepth 1) ]]; then
       find $targetDir -name '202*htm*' -maxdepth 1 -exec mv {} $destDir \;
-      chown liawne:liawne $destDir/$file || :
+      chown xxxxx:xxxxx $destDir/$file || :
     fi
   done) &
   ```
