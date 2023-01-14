@@ -239,12 +239,71 @@ export PROMPT_COMMAND='{ thisHistID=`history 1|awk "{print \\$1}"`;lastCommand=`
   $ sudo pacman -S aria2 uget
   ```
 
+### \# 安装 onedrive
+  `onedrive` 是难得不用翻墙可以访问的网盘，自己用的比较多，需要在 `manjaro` 上使用  
+  ```
+  $ yay -S onedrive-abraunegg
+  ```
+  安装完成后，需要配置认证
+  ```
+  $ onedrive --reauth
+  ```
+  需要自己生成 `service` 文件
+  ```
+  $ systemctl cat onedrive.service 
+  # /usr/lib/systemd/system/onedrive.service
+  [Unit]
+  Description=OneDrive Free Client
+  Documentation=https://github.com/abraunegg/onedrive
+  After=network-online.target
+  Wants=network-online.target
+  
+  [Service]
+  # Commented out hardenings are disabled because they may not work out of the box on your distribution
+  # If you know what you are doing please try to enable them.
+  
+  ProtectSystem=full
+  #PrivateUsers=true
+  #PrivateDevices=true
+  ProtectHostname=true
+  #ProtectClock=true
+  ProtectKernelTunables=true
+  #ProtectKernelModules=true
+  #ProtectKernelLogs=true
+  ProtectControlGroups=true
+  RestrictRealtime=true
+  ExecStart=/usr/bin/onedrive --monitor --monitor-interval 60
+  Restart=on-failure
+  User=liawne
+  Group=liawne
+  RestartSec=3
+  RestartPreventExitStatus=3
+
+  [Install]
+  WantedBy=default.target
+
+  $ sudo systemctl daemon-reload
+  $ sudo systemctl enable onedrive.service
+  ```
+  安装配置完成后，默认会在 `～` 下生成文件夹 `OneDrive`，同步云端文件。
+
+### \# 安装密码管理工具
+  密码管理使用的是 `keepass` 系，`KeePassXC` + `KeePass2Android` + `KeePassXC-Browser`  
+  ```
+  $ sudo snap install keepassxc
+  ```
+  安装完成后，用软件打开已经归档的 `kdbx` 文件即可。
+
 ### \# 安装 chrome 浏览器
   不是很习惯使用火狐，下载 `google-chrome`
   ```
   $ yay -S google-chrome
   ```
-  安装 `switchomega-proxy` 插件，登陆 google 帐号，开启同步功能后，会自动将 chrome 的配置和书签同步过来。
+  安装 `switchomega-proxy` 插件，登陆 google 帐号，开启同步功能后，会自动将 chrome 的配置和书签同步过来。  
+  安装 `KeePassXC-Browser` 插件，用来和 `KeePassXC` 协同管理密码; 系统只需要已经安装配置好 `KeePassXC`，打开浏览器，插件基础配置一下即可使用
+  - 关闭系统的 `Kwalletd` 密码管理工具。
+  - `KeePassXC` 开启浏览器集成功能
+  - 对于 `linux` 上由 `snap` 安装的 `KeePassXC`，需要再下载一个脚本，执行后才能和插件对接
 
   登陆谷歌帐号需要翻墙，见下面翻墙配置内容
 
