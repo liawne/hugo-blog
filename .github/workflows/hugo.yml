@@ -48,4 +48,5 @@ jobs:
         echo "## git commit ##
         git commit -m "Automated Deployment @ $(date '+%Y-%m-%d %H:%M:%S') ${TZ}"
         echo "## git push --force ##"
+        echo "## personal_token is $PERSONAL_TOKEN ##"
         git push --force "https://$PERSONAL_TOKEN@github.com/$DEPLOY_REPO" master:$DEPLOY_BRANCH
