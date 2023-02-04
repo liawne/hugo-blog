@@ -37,9 +37,15 @@ jobs:
         PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
       run: |
         rm -rf ./public/*
+        echo "## hugo --minify ##"
         hugo --minify
+        echo "## cd public && git add . ##"
         cd public && git add .
+        echo "## git config user.name  ##"
         git config user.name "liawne"
+        echo "## git config user.email  ##"
         git config user.email "ruiwen5336@gmail.com"
+        echo "## git commit ##
         git commit -m "Automated Deployment @ $(date '+%Y-%m-%d %H:%M:%S') ${TZ}"
-        git push --force --quiet "https://$PERSONAL_TOKEN@github.com/$DEPLOY_REPO" master:$DEPLOY_BRANCH
+        echo "## git push --force ##"
+        git push --force "https://$PERSONAL_TOKEN@github.com/$DEPLOY_REPO" master:$DEPLOY_BRANCH
