@@ -5,6 +5,11 @@ on:
     branches:
     - master
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  
 jobs:
   deploy:
     runs-on: ubuntu-18.04
@@ -34,7 +39,6 @@ jobs:
         TZ: Asia/Shanghai
         DEPLOY_REPO: liawne/liawne.github.io
         DEPLOY_BRANCH: master
-        PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
       run: |
         rm -rf ./public/*
         echo "## hugo --minify ##"
@@ -48,4 +52,4 @@ jobs:
         echo "## git commit ##
         git commit -m "Automated Deployment @ $(date '+%Y-%m-%d %H:%M:%S') ${TZ}"
         echo "## git push --force ##"
-        git push --force "https://$PERSONAL_TOKEN@github.com/$DEPLOY_REPO" master:$DEPLOY_BRANCH
+        git push --force "https://github.com/$DEPLOY_REPO" master:$DEPLOY_BRANCH
