@@ -176,6 +176,9 @@ toc = true
   XMODIFIERS    DEFAULT=\@im=fcitx
   INPUT_METHOD  DEFAULT=fcitx
   SDL_IM_MODULE DEFAULT=fcitx 
+  
+  # 若出现无法配置的情况，建议安装软件包 manjaro-asian-input-support-fcitx5
+  $ sudo pacman -S manjaro-asian-input-support-fcitx5
   ```
   注销后登陆，输入法显示出来了，进入云拼音和标点符号的配置
   > 入口：system settings/regional settings/input method  
