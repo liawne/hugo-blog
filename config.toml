@@ -1098,8 +1098,8 @@ uglyURLs = false
     # 说明：文章的 Front Matter 中的 `gitinfo`
     #      的优先级高于此处
 
-    repoURL = "https://github.com/liawne/liawne.github.io"
-    repoEditURL = "https://github.com/liawne/liawne.github.io/blob/master"
+    repoURL = "https://github.com/liawne/hugo-blog"
+    repoEditURL = "https://github.com/liawne/hugo-blog/blob/gh-pages"
 
     # Git 的图标
     gitIcon = "code-branch"
