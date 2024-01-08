@@ -1,52 +1,31 @@
-name: build
-
+name: pages-auto-build-deploy
 on:
+  # workflow_dispatch:
   push:
     branches:
-    - master
-  
+      - master
+
 jobs:
-  deploy:
-    runs-on: ubuntu-18.04
-
+  build-and-deploy:
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout source
-      uses: actions/checkout@v2
-      with:
-        submodules: true
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14.16.0'
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
 
-    - name: Install dependencies
-      run: npm install
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.100.2'
+          extended: true
 
-    - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v2
-      with:
-        hugo-version: '0.100.2'
-        extended: true
+      - name: Build Hugo
+        run: hugo --minify
 
-    - name: Deploy
-      env:
-        TZ: Asia/Shanghai
-        DEPLOY_REPO: liawne/liawne.github.io
-        DEPLOY_BRANCH: master
-        PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-      run: |
-        rm -rf ./public/*
-        echo "## hugo --minify ##"
-        hugo --minify
-        echo "## cd public && git add . ##"
-        cd public && git add .
-        echo "## git config user.name  ##"
-        git config user.name "liawne"
-        echo "## git config user.email  ##"
-        git config user.email "ruiwen5336@gmail.com"
-        echo "## git commit ##
-        git commit -m "Automated Deployment @ $(date '+%Y-%m-%d %H:%M:%S') ${TZ}"
-        echo "## git push --force ##"
-        echo "## personal_token is $PERSONAL_TOKEN ##"
-        git push --force "https://$PERSONAL_TOKEN@github.com/$DEPLOY_REPO" master:$DEPLOY_BRANCH
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: ./public
+          commit_message: ${{ github.event.head_commit.message }}
